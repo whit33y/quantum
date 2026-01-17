@@ -23,7 +23,7 @@ export class AuthService {
     this.currentUser.set(await account.get());
   }
 
-  async register(email: string, password: string, name?: string) {
+  async register(email: string, password: string, name: string) {
     await account.create({
       userId: ID.unique(),
       email,
