@@ -1,1 +1,15 @@
-<p>login-form works!</p>
+<form>
+  <app-input
+    label="Email"
+    placeholder="your@email.com"
+    type="email"
+    [formField]="loginForm.email"
+  />
+  <app-input
+    label="Password"
+    placeholder="*********"
+    type="password"
+    [formField]="loginForm.password"
+  />
+  <button (click)="onSubmit(); $event.preventDefault()">Login</button>
+</form>

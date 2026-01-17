@@ -8,10 +8,8 @@ describe('LoginForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginForm]
-    })
-    .compileComponents();
-
+      imports: [LoginForm],
+    });
     fixture = TestBed.createComponent(LoginForm);
     component = fixture.componentInstance;
     await fixture.whenStable();

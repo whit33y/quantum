@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './verify-page.html',
   styleUrl: './verify-page.css',
 })
-export class VerifyPage {
-
-}
+export class VerifyPage {}

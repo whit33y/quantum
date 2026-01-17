@@ -1,20 +1,20 @@
 import { Component, signal } from '@angular/core';
-import { form } from '@angular/forms/signals';
-import { RegisterData } from '../../models/auth-form.model';
+import { form, FormField } from '@angular/forms/signals';
+import { RegisterData, registerInitialData } from '../../models/auth-form.model';
+import { Input } from '../../../../shared/components/input/input';
 
 @Component({
   selector: 'app-register-form',
-  imports: [],
+  imports: [Input, FormField],
   templateUrl: './register-form.html',
   styleUrl: './register-form.css',
 })
 export class RegisterForm {
-  registerModel = signal<RegisterData>({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    name: '',
-  });
+  registerModel = signal<RegisterData>(registerInitialData);
 
   registerForm = form(this.registerModel);
+
+  onSubmit() {
+    console.log(this.registerForm().value());
+  }
 }
