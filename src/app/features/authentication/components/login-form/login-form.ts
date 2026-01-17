@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
-import { LoginData, loginInitialData } from '../../models/auth-form.model';
+import { LoginData, loginDataSchema, loginInitialData } from '../../models/auth-form.model';
 import { Input } from '../../../../shared/components/input/input';
 
 @Component({
@@ -11,7 +11,7 @@ import { Input } from '../../../../shared/components/input/input';
 })
 export class LoginForm {
   loginModel = signal<LoginData>(loginInitialData);
-  loginForm = form(this.loginModel);
+  loginForm = form(this.loginModel, loginDataSchema);
 
   onSubmit() {
     console.log(this.loginForm().value());

@@ -1,6 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
-import { RegisterData, registerInitialData } from '../../models/auth-form.model';
+import {
+  RegisterData,
+  registerDataSchema,
+  registerInitialData,
+} from '../../models/auth-form.model';
 import { Input } from '../../../../shared/components/input/input';
 
 @Component({
@@ -12,7 +16,7 @@ import { Input } from '../../../../shared/components/input/input';
 export class RegisterForm {
   registerModel = signal<RegisterData>(registerInitialData);
 
-  registerForm = form(this.registerModel);
+  registerForm = form(this.registerModel, registerDataSchema);
 
   onSubmit() {
     console.log(this.registerForm().value());
