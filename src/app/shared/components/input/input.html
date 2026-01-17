@@ -1,0 +1,21 @@
+<div>
+  <label [for]="label()">{{ label() }}</label>
+  <input
+    [type]="type()"
+    [id]="label()"
+    [disabled]="disabled()"
+    [placeholder]="placeholder()"
+    [class]="inputClass()"
+    [value]="value()"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+    [class]="!touched() && !disabled() ? '' : ''"
+  />
+  @if (errors() && touched()) {
+    @for (error of errors(); track error.kind) {
+      <p>
+        {{ error.message }}
+      </p>
+    }
+  }
+</div>
