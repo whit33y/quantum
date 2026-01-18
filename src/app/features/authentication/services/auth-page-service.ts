@@ -1,8 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthPageService {
-  currentFormState = signal<'signup' | 'login'>('login');
-}
+export class AuthPageService {}

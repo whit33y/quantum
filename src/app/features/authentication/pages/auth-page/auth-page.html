@@ -1,3 +1,8 @@
 <div>
-  <app-login-form />
+  @if (isLoginForm()) {
+    <app-login-form (emitLoginFormValues)="login($event)" />
+  } @else {
+    <app-register-form (emitRegisterFormValues)="register($event)" />
+  }
+  <button (click)="toggleForm()">Toggle form</button>
 </div>

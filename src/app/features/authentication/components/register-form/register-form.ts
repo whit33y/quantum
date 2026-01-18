@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
 import {
   RegisterData,
@@ -15,10 +15,10 @@ import { Input } from '../../../../shared/components/input/input';
 })
 export class RegisterForm {
   registerModel = signal<RegisterData>(registerInitialData);
-
   registerForm = form(this.registerModel, registerDataSchema);
+  emitRegisterFormValues = output<RegisterData>();
 
   onSubmit() {
-    console.log(this.registerForm().value());
+    this.emitRegisterFormValues.emit(this.registerForm().value());
   }
 }

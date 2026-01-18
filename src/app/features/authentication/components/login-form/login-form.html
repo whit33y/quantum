@@ -11,5 +11,7 @@
     type="password"
     [formField]="loginForm.password"
   />
-  <button (click)="onSubmit(); $event.preventDefault()">Login</button>
+  <button (click)="onSubmit(); $event.preventDefault()" [disabled]="loginForm().invalid()">
+    Login
+  </button>
 </form>
