@@ -10,7 +10,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     {
       provide: VERIFY_URL,
-      useValue: 'http://localhost:4200/verify',
+      useValue: 'http://localhost:4200/auth/verify',
     },
   ],
 };
