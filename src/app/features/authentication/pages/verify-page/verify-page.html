@@ -1,3 +1,10 @@
 <p>verify-page works!</p>
 <p>if not verified</p>
-<button (click)="resend()">Resend verify</button>
+@if (resendAvailable()) {
+  <button (click)="resend()">Resend verify</button>
+} @else {
+  <p>
+    Wait <span>{{ resendCount() }}</span
+    >before you can resend
+  </p>
+}
