@@ -1,8 +1,9 @@
-/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth-service';
-import { CoinApiService } from '../../../../core/services/coin-api-service';
 import { CryptoMarket } from '../../../../shared/models/coin-api.model';
+// import { CoinApiService } from '../../services/coin-api-service';
+import { UserDataService } from '../../services/user-data-service';
+import { UserFavoriteResponse } from '../../../../shared/models/user-data.model';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,12 +13,14 @@ import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 })
 export class DashboardPage implements OnInit {
   private authService = inject(AuthService);
-  private coinApiService = inject(CoinApiService);
+  // private coinApiService = inject(CoinApiService);
+  private userDataService = inject(UserDataService);
 
   coins: CryptoMarket[] = [];
+  userData: UserFavoriteResponse | null = null;
 
-  ngOnInit(): void {
-    // this.apiService.getMarkets().subscribe({
+  async ngOnInit(): Promise<void> {
+    // this.coinApiService.getMarkets().subscribe({
     //   next: (response) => {
     //     this.coins = response;
     //     console.log(this.coins);
@@ -26,13 +29,21 @@ export class DashboardPage implements OnInit {
     //     console.error(err);
     //   },
     // });
-    // this.apiService.getCoinDetails('bitcoin').subscribe({
+    // this.coinApiService.getCoinDetails('bitcoin').subscribe({
     //   next: (response) => {
     //     console.log(response);
     //   },
     // });
+    const userId = this.authService.currentUser()?.$id;
+    if (userId) {
+      try {
+        this.userData = await this.userDataService.getUserFavorite(userId);
+        console.log('User favorites:', this.userData);
+      } catch (error) {
+        console.error('Failed to load user favorites:', error);
+      }
+    }
   }
-
   logout() {
     this.authService.logout();
   }

@@ -8,40 +8,38 @@ export interface AppwriteDocument {
   $permissions: string[];
 }
 
-export interface userFavoriteDocument extends AppwriteDocument {
+export interface UserFavoriteDocument extends AppwriteDocument {
   userId: string;
   coinId: string;
 }
 
-export interface userFavorite {
+export interface UserFavorite {
   $id: string;
   $createdAt: string;
   $updatedAt: string;
-  userId: string;
   coinId: string;
 }
 
-export interface userFavoriteResponse {
-  items: userFavorite[];
+export interface UserFavoriteResponse {
+  items: UserFavorite[];
   total: number;
 }
 
-export interface userWalletDocument extends AppwriteDocument {
+export interface UserWalletDocument extends AppwriteDocument {
   userId: string;
   coinId: string;
   walletBalance: number;
 }
 
-export interface userWallet {
+export interface UserWallet {
   $id: string;
   $createdAt: string;
   $updatedAt: string;
-  userId: string;
   coinId: string;
   walletBalance: number;
 }
 
 export interface userWalletResponse {
-  items: userWallet[];
+  items: UserWallet[];
   total: number;
 }
