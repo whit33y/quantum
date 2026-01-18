@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { CryptoMarket } from '../../shared/models/api.model';
+import { CoinDetails, CryptoMarket } from '../../shared/models/api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,12 @@ export class ApiService {
     'x-cg-demo-api-key': environment.coinGeckoApi,
   });
 
-  getMarkets(currency = 'usd', limit = 50, page = 1): Observable<CryptoMarket[]> {
+  getMarkets(
+    currency = 'usd',
+    limit = 50,
+    page = 1,
+    symbols?: string[],
+  ): Observable<CryptoMarket[]> {
     return this.http.get<CryptoMarket[]>(`${this.BASE_URL}/coins/markets`, {
       headers: this.headers,
       params: {
@@ -24,6 +29,25 @@ export class ApiService {
         per_page: limit,
         page,
         sparkline: false,
+        ...(symbols?.length && { symbols: symbols.join(',') }),
+      },
+    });
+  }
+
+  getCoinDetails(
+    coinId: string,
+    tickers = false,
+    developer_data = false,
+    localization = false,
+    include_categories_details = false,
+  ): Observable<CoinDetails> {
+    return this.http.get<CoinDetails>(`${this.BASE_URL}/coins/${coinId}`, {
+      headers: this.headers,
+      params: {
+        developer_data,
+        localization,
+        include_categories_details,
+        tickers,
       },
     });
   }

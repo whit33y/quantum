@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth-service';
 import { ApiService } from '../../../../core/services/api-service';
@@ -16,15 +17,20 @@ export class DashboardPage implements OnInit {
   coins: CryptoMarket[] = [];
 
   ngOnInit(): void {
-    this.apiService.getMarkets().subscribe({
-      next: (response) => {
-        this.coins = response;
-        console.log(this.coins);
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
+    // this.apiService.getMarkets().subscribe({
+    //   next: (response) => {
+    //     this.coins = response;
+    //     console.log(this.coins);
+    //   },
+    //   error: (err) => {
+    //     console.error(err);
+    //   },
+    // });
+    // this.apiService.getCoinDetails('bitcoin').subscribe({
+    //   next: (response) => {
+    //     console.log(response);
+    //   },
+    // });
   }
 
   logout() {
