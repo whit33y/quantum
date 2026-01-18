@@ -1,0 +1,17 @@
+<form>
+  <app-input
+    label="Email"
+    placeholder="your@email.com"
+    type="email"
+    [formField]="loginForm.email"
+  />
+  <app-input
+    label="Password"
+    placeholder="*********"
+    type="password"
+    [formField]="loginForm.password"
+  />
+  <button (click)="onSubmit(); $event.preventDefault()" [disabled]="loginForm().invalid()">
+    Login
+  </button>
+</form>

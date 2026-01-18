@@ -1,0 +1,24 @@
+<form>
+  <app-input
+    label="Email"
+    placeholder="your@email.com"
+    type="email"
+    [formField]="registerForm.email"
+  />
+  <app-input label="Username" placeholder="username" type="text" [formField]="registerForm.name" />
+  <app-input
+    label="Password"
+    placeholder="*********"
+    type="password"
+    [formField]="registerForm.password"
+  />
+  <app-input
+    label="Confirm password"
+    placeholder="*********"
+    type="password"
+    [formField]="registerForm.confirmPassword"
+  />
+  <button (click)="onSubmit(); $event.preventDefault()" [disabled]="registerForm().invalid()">
+    Register
+  </button>
+</form>

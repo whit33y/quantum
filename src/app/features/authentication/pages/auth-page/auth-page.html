@@ -1,0 +1,9 @@
+<div>
+  @if (isLoginForm()) {
+    <app-login-form (emitLoginFormValues)="login($event)" />
+  } @else {
+    <app-register-form (emitRegisterFormValues)="register($event)" />
+  }
+  <p class="text-red-500">{{ error() }}</p>
+  <button (click)="toggleForm()">Toggle form</button>
+</div>
