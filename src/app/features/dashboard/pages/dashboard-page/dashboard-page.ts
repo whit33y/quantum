@@ -1,8 +1,8 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth-service';
-import { ApiService } from '../../../../core/services/api-service';
-import { CryptoMarket } from '../../../../shared/models/api.model';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,7 +12,7 @@ import { CryptoMarket } from '../../../../shared/models/api.model';
 })
 export class DashboardPage implements OnInit {
   private authService = inject(AuthService);
-  private apiService = inject(ApiService);
+  private coinApiService = inject(CoinApiService);
 
   coins: CryptoMarket[] = [];
 

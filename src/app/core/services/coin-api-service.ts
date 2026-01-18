@@ -2,12 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { CoinDetails, CryptoMarket } from '../../shared/models/api.model';
+import { CoinDetails, CryptoMarket } from '../../shared/models/coin-api.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class CoinApiService {
   private http = inject(HttpClient);
   private readonly BASE_URL = 'https://api.coingecko.com/api/v3';
 
