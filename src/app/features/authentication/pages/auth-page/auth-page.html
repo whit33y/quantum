@@ -4,6 +4,6 @@
   } @else {
     <app-register-form (emitRegisterFormValues)="register($event)" />
   }
+  <p class="text-red-500">{{ error() }}</p>
   <button (click)="toggleForm()">Toggle form</button>
-  <button (click)="logout()">Logout</button>
 </div>

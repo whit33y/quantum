@@ -11,13 +11,17 @@ import { AppwriteError } from '../../shared/models/appwrite.model';
 export class AuthService {
   readonly currentUser = signal<Models.User<Models.Preferences> | null>(null);
   readonly isLoggedIn = computed(() => !!this.currentUser());
+  readonly isUserVerified = computed(() => this.currentUser()?.emailVerification);
   readonly isEmailVerified = computed(() => this.currentUser()?.emailVerification ?? false);
   private readonly verifyUrl = inject(VERIFY_URL);
   authError = signal<string>('');
   private router = inject(Router);
 
+  readonly isInitialized = signal(false);
+  readonly sessionReady: Promise<void>;
+
   constructor() {
-    this.restoreSession();
+    this.sessionReady = this.restoreSession();
   }
 
   async login(email: string, password: string) {
@@ -27,6 +31,8 @@ export class AuthService {
         password,
       });
       this.currentUser.set(await account.get());
+      this.router.navigate(['/dashboard']);
+      this.authError.set('');
     } catch (err: unknown) {
       const error = err as AppwriteError;
       if (error.message) {
@@ -57,9 +63,17 @@ export class AuthService {
   }
 
   async resendVerification() {
-    await account.createEmailVerification({
-      url: this.verifyUrl,
-    });
+    try {
+      await account.createEmailVerification({
+        url: this.verifyUrl,
+      });
+    } catch (err: unknown) {
+      const error = err as AppwriteError;
+      if (error.message) {
+        this.authError.set(error.message);
+        console.log(this.authError());
+      }
+    }
   }
 
   async verifyEmail(userId: string, secret: string) {
@@ -70,6 +84,7 @@ export class AuthService {
       });
       const user = await account.get();
       this.currentUser.set(user);
+      this.router.navigate(['/dashboard']);
     } catch (err: unknown) {
       const error = err as AppwriteError;
       if (error.message) {
@@ -84,6 +99,7 @@ export class AuthService {
       sessionId: 'current',
     });
     this.currentUser.set(null);
+    this.router.navigate(['/auth/login']);
   }
 
   async restoreSession() {
@@ -92,6 +108,8 @@ export class AuthService {
       this.currentUser.set(user);
     } catch {
       this.currentUser.set(null);
+    } finally {
+      this.isInitialized.set(true);
     }
   }
 }

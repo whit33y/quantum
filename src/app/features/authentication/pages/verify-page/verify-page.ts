@@ -59,6 +59,10 @@ export class VerifyPage implements OnInit, OnDestroy {
     this.startCountdown();
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
   ngOnDestroy() {
     this.clearCountdown();
   }

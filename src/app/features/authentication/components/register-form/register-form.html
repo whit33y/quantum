@@ -18,5 +18,7 @@
     type="password"
     [formField]="registerForm.confirmPassword"
   />
-  <button (click)="onSubmit(); $event.preventDefault()">Register</button>
+  <button (click)="onSubmit(); $event.preventDefault()" [disabled]="registerForm().invalid()">
+    Register
+  </button>
 </form>

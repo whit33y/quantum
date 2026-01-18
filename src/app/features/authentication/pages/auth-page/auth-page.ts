@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { LoginForm } from '../../components/login-form/login-form';
 import { RegisterForm } from '../../components/register-form/register-form';
 import { LoginData, RegisterData } from '../../models/auth-form.model';
@@ -12,6 +12,8 @@ import { AuthService } from '../../../../core/services/auth-service';
 })
 export class AuthPage {
   private authService = inject(AuthService);
+
+  error = computed(() => this.authService.authError());
 
   isLoginForm = signal(true);
 
@@ -27,9 +29,5 @@ export class AuthPage {
   register(registerForm: RegisterData) {
     console.log(registerForm);
     this.authService.register(registerForm.email, registerForm.password, registerForm.name);
-  }
-
-  logout() {
-    this.authService.logout();
   }
 }
