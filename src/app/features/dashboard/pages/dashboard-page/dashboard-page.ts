@@ -43,6 +43,14 @@ export class DashboardPage implements OnInit {
         console.error('Failed to load user favorites:', error);
       }
     }
+    // if (userId) {
+    //   try {
+    //     const response = await this.userDataService.addFavoriteCoin(userId, 'btc');
+    //     console.log(response, this.authService.currentUser());
+    //   } catch (error) {
+    //     console.error('Failed to add user', error);
+    //   }
+    // }
   }
   logout() {
     this.authService.logout();
