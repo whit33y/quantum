@@ -7,7 +7,7 @@ import {
 } from '../../../shared/models/user-data.model';
 import { tablesDb } from '../../../lib/appwrite';
 import { environment } from '../../../../environments/environment';
-import { Query } from 'appwrite';
+import { ID, Permission, Query, Role } from 'appwrite';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +31,24 @@ export class UserDataService {
     };
   }
 
+  async addFavoriteCoin(userId: string, coinId: string) {
+    const response = await tablesDb.createRow({
+      databaseId: environment.appwriteDatabaseId,
+      tableId: environment.appwriteUserFavorite,
+      rowId: ID.unique(),
+      data: {
+        userId,
+        coinId,
+      },
+      permissions: [
+        Permission.read(Role.user(userId)),
+        Permission.update(Role.user(userId)),
+        Permission.delete(Role.user(userId)),
+      ],
+    });
+    return response;
+  }
+
   async getUserWallet(userId: string): Promise<userWalletResponse> {
     const response = await tablesDb.listRows<UserWalletDocument>({
       databaseId: environment.appwriteDatabaseId,
@@ -48,5 +66,24 @@ export class UserDataService {
       })),
       total: response.total,
     };
+  }
+
+  async addCoinToWallet(userId: string, walletBalance: number, coinId: string) {
+    const response = await tablesDb.createRow({
+      databaseId: environment.appwriteDatabaseId,
+      tableId: environment.appwriteUserWallet,
+      rowId: ID.unique(),
+      data: {
+        userId,
+        walletBalance,
+        coinId,
+      },
+      permissions: [
+        Permission.read(Role.user(userId)),
+        Permission.update(Role.user(userId)),
+        Permission.delete(Role.user(userId)),
+      ],
+    });
+    return response;
   }
 }
