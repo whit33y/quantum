@@ -149,3 +149,9 @@ export interface MarketData {
   price_change_percentage_60d_in_currency: CurrencyMap;
   price_change_percentage_200d_in_currency: CurrencyMap;
 }
+
+export interface MarketChart {
+  prices: [number, number][];
+  market_caps: [number, number][];
+  total_volumes: [number, number][];
+}

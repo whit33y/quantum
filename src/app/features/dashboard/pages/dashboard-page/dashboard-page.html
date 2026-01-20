@@ -1,1 +1,54 @@
 <button (click)="logout()">Logout</button>
+<app-info-card
+  [mainIcon]="WalletIcon"
+  [secondIcon]="TrendingUp"
+  title="Total net worth"
+  value="123.07$"
+  info="12% of all time"
+  infoColor="red"
+/>
+
+<app-asset-card
+  assetText="Asset"
+  assetName="Bitcoin"
+  assetDescription="Bitcoin | Satoshi"
+  firstElement="ATH"
+  firstElementDescription="83000$"
+  secondElement="Created in"
+  secondElementDescription="2009"
+  thirdElement="Current Price"
+  thirdElementDescription="70000$"
+  fourthElement="Change"
+  fourthElementDescription="-19%"
+/>
+
+<app-list-card
+  listTitle="Watchlist"
+  [elements]="[
+    {
+      elementName: 'Bitcoin',
+      elementCode: 'BTC',
+      elementPrice: 76000,
+      elementStats: -12,
+    },
+    {
+      elementName: 'Ethereum',
+      elementCode: 'ETH',
+      elementPrice: 12000,
+      elementStats: 10,
+    },
+  ]"
+/>
+
+<div class="space-y-4">
+  <!-- <app-basic-bar-chart
+    [label]="`Price change % of ` + coinInfo()?.name"
+    [labels]="chartLabels"
+    [data]="chartData()"
+  />
+  <app-basic-line-chart
+    [label]="`Price History of ` + lineChartName()"
+    [labels]="lineChartLabels()"
+    [data]="lineChartData()"
+  /> -->
+</div>
