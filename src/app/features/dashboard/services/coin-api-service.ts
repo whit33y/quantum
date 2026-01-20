@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { CoinDetails, CryptoMarket } from '../../../shared/models/coin-api.model';
+import { CoinDetails, CryptoMarket, MarketChart } from '../../../shared/models/coin-api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +50,22 @@ export class CoinApiService {
         tickers,
       },
     });
+  }
+
+  getMarketChart(
+    coinId: string,
+    days: string,
+    currency = 'usd',
+  ): Observable<MarketChart> {
+    return this.http.get<MarketChart>(
+      `${this.BASE_URL}/coins/${coinId}/market_chart`,
+      {
+        headers: this.headers,
+        params: {
+          vs_currency: currency,
+          days,
+        },
+      },
+    );
   }
 }
