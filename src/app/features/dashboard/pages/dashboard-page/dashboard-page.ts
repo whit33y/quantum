@@ -6,10 +6,11 @@ import { UserDataService } from '../../services/user-data-service';
 import { UserFavoriteResponse } from '../../../../shared/models/user-data.model';
 import { InfoCard } from '../../../../shared/components/info-card/info-card';
 import { TrendingUp, WalletIcon } from 'lucide-angular';
+import { AssetCard } from '../../../../shared/components/asset-card/asset-card';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [InfoCard],
+  imports: [InfoCard, AssetCard],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
