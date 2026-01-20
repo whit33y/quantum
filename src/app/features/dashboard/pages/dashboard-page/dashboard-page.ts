@@ -44,19 +44,21 @@ export class DashboardPage implements OnInit {
 
   lineChartLabels = signal<string[]>([]);
   lineChartData = signal<number[]>([]);
+  lineChartName = signal<string>('');
 
   readonly TrendingUp = TrendingUp;
   readonly WalletIcon = WalletIcon;
 
   async ngOnInit(): Promise<void> {
-    // this.coinApiService.getCoinDetails('bitcoin', true).subscribe({
+    // this.coinApiService.getCoinDetails('doge', true).subscribe({
     //   next: (response) => {
     //     this.coinInfo.set(response);
     //   },
     // });
 
-    // this.coinApiService.getMarketChart('bitcoin', '7').subscribe({
+    // this.coinApiService.getMarketChart('bitcoin', '30').subscribe({
     //   next: (response) => {
+    //     this.lineChartName.set('bitcoin');
     //     const prices = response.prices;
     //     this.lineChartLabels.set(
     //       prices.map((p) =>

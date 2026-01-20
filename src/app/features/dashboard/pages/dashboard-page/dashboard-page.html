@@ -42,12 +42,12 @@
 
 <div class="space-y-4">
   <!-- <app-basic-bar-chart
-    [label]="`Price change % of` + coinInfo()?.name"
+    [label]="`Price change % of ` + coinInfo()?.name"
     [labels]="chartLabels"
     [data]="chartData()"
   />
   <app-basic-line-chart
-    [label]="`Price History of ` + coinInfo()?.name"
+    [label]="`Price History of ` + lineChartName()"
     [labels]="lineChartLabels()"
     [data]="lineChartData()"
   /> -->

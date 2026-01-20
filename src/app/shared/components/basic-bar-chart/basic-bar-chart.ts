@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, input } from '@angular/core';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -8,19 +8,28 @@ Chart.register(...registerables);
   standalone: true,
   template: `
     <div class="relative w-full h-64 p-2 rounded-2xl bg-zinc-800 border border-white/5">
-      <h3 class="font-semibold text-sm text-zinc-300 uppercase tracking-wider mb-4">{{ label }}</h3>
+      <h3 class="font-semibold text-sm text-zinc-300 uppercase tracking-wider mb-4">
+        {{ label() }}
+      </h3>
       <canvas #chartCanvas></canvas>
     </div>
   `,
-  styles: [`:host { display: block; width: 100%; }`]
+  styles: [
+    `
+      :host {
+        display: block;
+        width: 100%;
+      }
+    `,
+  ],
 })
 export class BasicBarChart implements AfterViewInit, OnDestroy {
   @ViewChild('chartCanvas') private chartCanvas!: ElementRef<HTMLCanvasElement>;
-  
-  @Input() labels: string[] = [];
-  @Input() data: number[] = [];
-  @Input() label: string = 'Price Change %';
-  @Input() color: string = '#818cf8';
+
+  labels = input<string[]>([]);
+  data = input<number[]>([]);
+  label = input<string | undefined>('Price Change %');
+  color = input<string>('#818cf8');
 
   private chart: Chart | undefined;
 
@@ -48,34 +57,36 @@ export class BasicBarChart implements AfterViewInit, OnDestroy {
     const config: ChartConfiguration = {
       type: 'bar',
       data: {
-        labels: this.labels,
-        datasets: [{
-          label: this.label,
-          data: this.data,
-          backgroundColor: this.data.map(v => v >= 0 ? '#818cf8' : '#ef4444'), // indigo-400 for positive, red-500 for negative
-          borderRadius: 8,
-          borderSkipped: false,
-          barThickness: 20,
-        }]
+        labels: this.labels(),
+        datasets: [
+          {
+            label: this.label(),
+            data: this.data(),
+            backgroundColor: this.data().map((v) => (v >= 0 ? '#818cf8' : '#ef4444')),
+            borderRadius: 8,
+            borderSkipped: false,
+            barThickness: 20,
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         layout: {
           padding: {
-            bottom: 35
-          }
+            bottom: 35,
+          },
         },
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           tooltip: {
-            backgroundColor: '#27272a', // zinc-800
+            backgroundColor: '#27272a',
             padding: 12,
             titleColor: '#fff',
             titleFont: { size: 14, weight: 'bold' },
-            bodyColor: '#a1a1aa', // zinc-400
+            bodyColor: '#a1a1aa',
             bodyFont: { size: 13 },
             borderColor: 'rgba(255, 255, 255, 0.1)',
             borderWidth: 1,
@@ -87,12 +98,15 @@ export class BasicBarChart implements AfterViewInit, OnDestroy {
                   label += ': ';
                 }
                 if (context.parsed.y !== null) {
-                  label += new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2 }).format(context.parsed.y / 100);
+                  label += new Intl.NumberFormat('en-US', {
+                    style: 'percent',
+                    minimumFractionDigits: 2,
+                  }).format(context.parsed.y / 100);
                 }
                 return label;
-              }
-            }
-          }
+              },
+            },
+          },
         },
         scales: {
           x: {
@@ -100,27 +114,27 @@ export class BasicBarChart implements AfterViewInit, OnDestroy {
               display: false,
             },
             ticks: {
-              color: '#a1a1aa', // zinc-400
-              font: { size: 11 }
-            }
+              color: '#a1a1aa',
+              font: { size: 11 },
+            },
           },
           y: {
             grid: {
               color: 'rgba(255, 255, 255, 0.05)',
             },
             ticks: {
-              color: '#a1a1aa', // zinc-400
+              color: '#a1a1aa',
               font: { size: 11 },
-              callback: function(value) {
+              callback: function (value) {
                 return value + '%';
-              }
+              },
             },
             border: {
-              display: false
-            }
-          }
-        }
-      }
+              display: false,
+            },
+          },
+        },
+      },
     };
 
     this.chart = new Chart(ctx, config);

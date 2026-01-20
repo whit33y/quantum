@@ -1,7 +1,7 @@
 import {
   Component,
   ElementRef,
-  Input,
+  input,
   ViewChild,
   AfterViewInit,
   OnDestroy,
@@ -16,7 +16,9 @@ Chart.register(...registerables);
   standalone: true,
   template: `
     <div class="relative w-full h-64 p-4 rounded-2xl bg-zinc-800 border border-white/5">
-      <h3 class="font-semibold text-sm text-zinc-300 uppercase tracking-wider mb-4">{{ label }}</h3>
+      <h3 class="font-semibold text-sm text-zinc-300 uppercase tracking-wider mb-4">
+        {{ label() }}
+      </h3>
       <canvas #chartCanvas></canvas>
     </div>
   `,
@@ -32,10 +34,10 @@ Chart.register(...registerables);
 export class BasicLineChart implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('chartCanvas') private chartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  @Input() labels: string[] = [];
-  @Input() data: number[] = [];
-  @Input() label: string | undefined = 'Price History';
-  @Input() color: string = '#818cf8';
+  labels = input<string[]>([]);
+  data = input<number[]>([]);
+  label = input<string | undefined>('Price History');
+  color = input<string>('#818cf8');
 
   private chart: Chart | undefined;
 
@@ -67,15 +69,15 @@ export class BasicLineChart implements AfterViewInit, OnDestroy, OnChanges {
     const config: ChartConfiguration = {
       type: 'line',
       data: {
-        labels: this.labels,
+        labels: this.labels(),
         datasets: [
           {
-            label: this.label,
-            data: this.data,
+            label: this.label(),
+            data: this.data(),
             borderColor: this.color,
             backgroundColor: gradient,
             fill: true,
-            tension: 0.4, // Smooth curve
+            tension: 0.4,
             pointRadius: 0,
             pointHoverRadius: 6,
             pointHoverBackgroundColor: '#fff',
