@@ -4,19 +4,26 @@ import { verifiedGuard } from './core/guards/verified-guard';
 
 export const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: () =>
-      import('./features/authentication/authentication.routes').then((m) => m.AUTH_ROUTES),
-    title: 'Sign up or log in',
-  },
-  //usage example
-  {
     path: 'dashboard',
     canActivate: [authGuard, verifiedGuard],
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.routes').then((r) => r.DASHBOARD_ROUTES),
+  },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/authentication/authentication.routes').then((r) => r.AUTH_ROUTES),
+    title: 'Sign up or log in',
+  },
+  {
+    path: 'portfolio',
+    canActivate: [authGuard, verifiedGuard],
+    loadChildren: () =>
+      import('./features/portfolio/portfolio.routes').then((r) => r.PORTFOLIO_ROUTES),
+  },
+  {
+    path: '**',
     loadComponent: () =>
-      import('./features/dashboard/pages/dashboard-page/dashboard-page').then(
-        (m) => m.DashboardPage,
-      ),
-    title: 'Dashboard',
+      import('./shared/pages/not-found-page/not-found-page').then((p) => p.NotFoundPage),
   },
 ];
