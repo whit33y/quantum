@@ -21,3 +21,21 @@
   fourthElement="Change"
   fourthElementDescription="-19%"
 />
+
+<app-list-card
+  listTitle="Watchlist"
+  [elements]="[
+    {
+      elementName: 'Bitcoin',
+      elementCode: 'BTC',
+      elementPrice: 76000,
+      elementStats: -12,
+    },
+    {
+      elementName: 'Ethereum',
+      elementCode: 'ETH',
+      elementPrice: 12000,
+      elementStats: 10,
+    },
+  ]"
+/>
