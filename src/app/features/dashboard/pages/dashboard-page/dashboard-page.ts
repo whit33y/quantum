@@ -4,10 +4,12 @@ import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 // import { CoinApiService } from '../../services/coin-api-service';
 import { UserDataService } from '../../services/user-data-service';
 import { UserFavoriteResponse } from '../../../../shared/models/user-data.model';
+import { InfoCard } from '../../../../shared/components/info-card/info-card';
+import { TrendingUp, WalletIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [],
+  imports: [InfoCard],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -18,6 +20,9 @@ export class DashboardPage implements OnInit {
 
   coins: CryptoMarket[] = [];
   userData: UserFavoriteResponse | null = null;
+
+  readonly TrendingUp = TrendingUp;
+  readonly WalletIcon = WalletIcon;
 
   async ngOnInit(): Promise<void> {
     // this.coinApiService.getMarkets().subscribe({
