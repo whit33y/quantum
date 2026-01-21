@@ -87,7 +87,4 @@ export class DashboardPage implements OnInit {
     //   }
     // }
   }
-  logout() {
-    this.authService.logout();
-  }
 }
