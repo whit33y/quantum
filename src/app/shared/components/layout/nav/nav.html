@@ -10,6 +10,8 @@
         <i-lucide [img]="Search" class="w-4 h-4 text-zinc-500"></i-lucide>
         <input
           type="text"
+          [formField]="searchForm.search"
+          (input)="changeSearch()"
           placeholder="Search coins..."
           class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-zinc-300"
         />
