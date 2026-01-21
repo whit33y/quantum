@@ -2,16 +2,19 @@ import { Component, ElementRef, HostListener, inject, signal } from '@angular/co
 import { form, FormField } from '@angular/forms/signals';
 import { LucideAngularModule, User, Search, Settings, LogOut } from 'lucide-angular';
 import { SearchService } from '../../../../core/services/search-service';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth-service';
 
 @Component({
   selector: 'app-nav',
-  imports: [LucideAngularModule, FormField],
+  imports: [LucideAngularModule, FormField, RouterLink],
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })
 export class Nav {
   private elementRef = inject(ElementRef);
   private searchService = inject(SearchService);
+  private authService = inject(AuthService);
   private debounceTimer?: number;
 
   readonly User = User;
@@ -41,5 +44,9 @@ export class Nav {
       const value = this.searchModel().search;
       this.searchService.setSearchTerm(value);
     }, 300);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
