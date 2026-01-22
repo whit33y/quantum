@@ -50,11 +50,18 @@ export class DashboardPage implements OnInit {
   readonly WalletIcon = WalletIcon;
 
   async ngOnInit(): Promise<void> {
-    this.coinApiService.getCoinDetails('doge', true).subscribe({
+    this.coinApiService.getCoinDetails('ethereum', true).subscribe({
       next: (response) => {
         this.coinInfo.set(response);
+        console.log(response);
       },
     });
+
+    // this.coinApiService.getMarkets('usd', 5, 1, ['btc', 'eth']).subscribe({
+    //   next: (response) => {
+    //     console.log(response);
+    //   }
+    // })
 
     this.coinApiService.getMarketChart('bitcoin', '30').subscribe({
       next: (response) => {

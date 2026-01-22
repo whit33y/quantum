@@ -10,15 +10,15 @@ import { CoinsIcon, LucideAngularModule } from 'lucide-angular';
 export class AssetCard {
   readonly CoinsIcon = CoinsIcon;
 
-  assetText = input<string>('');
-  assetName = input<string>('');
-  assetDescription = input<string>('');
-  firstElement = input<string>('');
-  firstElementDescription = input<string>('');
-  secondElement = input<string>('');
-  secondElementDescription = input<string>('');
-  thirdElement = input<string>('');
-  thirdElementDescription = input<string>('');
-  fourthElement = input<string>('');
-  fourthElementDescription = input<string>('');
+  assetText = input<string | number | undefined>('');
+  assetName = input<string | number | undefined>('');
+  assetDescription = input<string | number | undefined>('');
+  firstElement = input<string | number | undefined>('');
+  firstElementDescription = input<string | number | undefined>('');
+  secondElement = input<string | number | undefined>('');
+  secondElementDescription = input<string | number | undefined | null>('');
+  thirdElement = input<string | number | undefined>('');
+  thirdElementDescription = input<string | number | undefined>('');
+  fourthElement = input<string | number | undefined>('');
+  fourthElementDescription = input<string | number | undefined>('');
 }

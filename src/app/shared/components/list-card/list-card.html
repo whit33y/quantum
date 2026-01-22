@@ -3,7 +3,7 @@
     <h3 class="font-semibold text-sm text-zinc-400">{{ listTitle() }}</h3>
   </div>
   <div class="space-y-3">
-    @for (element of elements(); track element.elementCode) {
+    @for (element of elements(); track $index) {
       <div
         class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg transition-all cursor-pointer group"
       >
