@@ -112,4 +112,8 @@ export class AuthService {
       this.isInitialized.set(true);
     }
   }
+
+  resetError() {
+    this.authError.set('');
+  }
 }

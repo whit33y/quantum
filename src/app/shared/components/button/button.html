@@ -1,0 +1,8 @@
+<button
+  class="w-full p-2 rounded-full font-semibold tracking-tight"
+  [class]="computedClasses"
+  (click)="onClick($event)"
+  [disabled]="variant() === 'disabled' || disabled()"
+>
+  {{ text() }}
+</button>

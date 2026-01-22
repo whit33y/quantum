@@ -1,11 +1,14 @@
 import { Component, inject, signal, computed, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
+import { NavTickerScroll } from '../../../../shared/components/layout/nav/nav-ticker-scroll/nav-ticker-scroll';
+import { Button } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-verify-page',
   templateUrl: './verify-page.html',
   styleUrl: './verify-page.css',
+  imports: [NavTickerScroll, Button],
 })
 export class VerifyPage implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);

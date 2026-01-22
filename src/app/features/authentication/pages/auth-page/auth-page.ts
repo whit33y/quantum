@@ -3,10 +3,11 @@ import { LoginForm } from '../../components/login-form/login-form';
 import { RegisterForm } from '../../components/register-form/register-form';
 import { LoginData, RegisterData } from '../../models/auth-form.model';
 import { AuthService } from '../../../../core/services/auth-service';
+import { NavTickerScroll } from '../../../../shared/components/layout/nav/nav-ticker-scroll/nav-ticker-scroll';
 
 @Component({
   selector: 'app-auth-page',
-  imports: [LoginForm, RegisterForm],
+  imports: [LoginForm, RegisterForm, NavTickerScroll],
   templateUrl: './auth-page.html',
   styleUrl: './auth-page.css',
 })
@@ -19,6 +20,7 @@ export class AuthPage {
 
   toggleForm() {
     this.isLoginForm.update((value) => !value);
+    this.authService.resetError();
   }
 
   login(loginForm: LoginData) {
