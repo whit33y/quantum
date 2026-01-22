@@ -1,4 +1,12 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  input,
+  OnChanges,
+} from '@angular/core';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -23,7 +31,7 @@ Chart.register(...registerables);
     `,
   ],
 })
-export class BasicBarChart implements AfterViewInit, OnDestroy {
+export class BasicBarChart implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('chartCanvas') private chartCanvas!: ElementRef<HTMLCanvasElement>;
 
   labels = input<string[]>([]);

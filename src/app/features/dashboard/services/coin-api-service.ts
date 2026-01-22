@@ -52,20 +52,13 @@ export class CoinApiService {
     });
   }
 
-  getMarketChart(
-    coinId: string,
-    days: string,
-    currency = 'usd',
-  ): Observable<MarketChart> {
-    return this.http.get<MarketChart>(
-      `${this.BASE_URL}/coins/${coinId}/market_chart`,
-      {
-        headers: this.headers,
-        params: {
-          vs_currency: currency,
-          days,
-        },
+  getMarketChart(coinId: string, days: string, currency = 'usd'): Observable<MarketChart> {
+    return this.http.get<MarketChart>(`${this.BASE_URL}/coins/${coinId}/market_chart`, {
+      headers: this.headers,
+      params: {
+        vs_currency: currency,
+        days,
       },
-    );
+    });
   }
 }

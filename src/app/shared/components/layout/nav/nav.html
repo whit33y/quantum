@@ -5,22 +5,35 @@
         <span class="text-xl font-bold tracking-tight text-white">QUANTUM</span>
       </div>
       <div
-        class="hidden md:flex items-center bg-zinc-950 border border-white/10 rounded-full px-4 py-1.5 w-80 focus-within:border-indigo-500/50 transition-all">
+        class="hidden md:flex items-center bg-zinc-950 border border-white/10 rounded-full px-4 py-1.5 w-80 focus-within:border-indigo-500/50 transition-all"
+      >
         <i-lucide [img]="Search" class="w-4 h-4 text-zinc-500"></i-lucide>
-        <input type="text" [formField]="searchForm.search" (input)="changeSearch()" placeholder="Search coins..."
-          class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-zinc-300" />
+        <input
+          type="text"
+          [formField]="searchForm.search"
+          (input)="changeSearch()"
+          placeholder="Search coins..."
+          class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-zinc-300"
+        />
       </div>
     </div>
     <div class="flex items-center gap-6">
       <div class="flex items-center gap-2">
         <span class="relative flex h-2 w-2">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+          ></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
-        <span class="text-[11px] font-medium text-zinc-400 uppercase tracking-widest">API: Connected</span>
+        <span class="text-[11px] font-medium text-zinc-400 uppercase tracking-widest"
+          >API: Connected</span
+        >
       </div>
       <div class="relative flex items-center gap-4 border-l border-white/10 pl-6">
-        <button (click)="toggleMenu()" class="cursor-pointer focus:outline-none active:scale-95 transition-transform">
+        <button
+          (click)="toggleMenu()"
+          class="cursor-pointer focus:outline-none active:scale-95 transition-transform"
+        >
           <div class="w-8 h-8 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 p-px">
             <div class="w-full h-full bg-zinc-900 rounded-full flex items-center justify-center">
               <i-lucide [img]="User" class="w-6 h-6 text-white" />
@@ -29,28 +42,41 @@
         </button>
 
         @if (isMenuOpen) {
-        <div
-          class="absolute right-0 top-full mt-2 w-64 origin-top-right rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl ring-1 ring-black/5 p-1 z-50 animate-in fade-in zoom-in-95 duration-100">
-          <a [routerLink]="['/dashboard']"
-            class="flex items-center gap-3 px-3 py-2 text-sm text-zinc-400 rounded-lg hover:bg-zinc-800/50 hover:text-white transition-all group">
-            <i-lucide [img]="Settings" class="w-4 h-4 text-zinc-500 group-hover:text-indigo-400 transition-colors" />
-            Settings
-          </a>
-          <button (click)="logout()"
-            class="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-all group">
-            <i-lucide [img]="LogOut" class="w-4 h-4 text-red-400/70 group-hover:text-red-400 transition-colors" />
-            Sign out
-          </button>
-        </div>
+          <div
+            class="absolute right-0 top-full mt-2 w-64 origin-top-right rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl ring-1 ring-black/5 p-1 z-50 animate-in fade-in zoom-in-95 duration-100"
+          >
+            <a
+              [routerLink]="['/dashboard']"
+              class="flex items-center gap-3 px-3 py-2 text-sm text-zinc-400 rounded-lg hover:bg-zinc-800/50 hover:text-white transition-all group"
+            >
+              <i-lucide
+                [img]="Settings"
+                class="w-4 h-4 text-zinc-500 group-hover:text-indigo-400 transition-colors"
+              />
+              Settings
+            </a>
+            <button
+              (click)="logout()"
+              class="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 rounded-lg hover:bg-red-500/10 hover:text-red-300 transition-all group"
+            >
+              <i-lucide
+                [img]="LogOut"
+                class="w-4 h-4 text-red-400/70 group-hover:text-red-400 transition-colors"
+              />
+              Sign out
+            </button>
+          </div>
         }
       </div>
     </div>
   </div>
-  <app-nav-ticker-scroll [tickerElements]="[
+  <app-nav-ticker-scroll
+    [tickerElements]="[
       { shortName: 'BTC', price: 63000, percent: -6.4 },
       { shortName: 'ETH', price: 12000, percent: 3.4 },
       { shortName: 'DOGE', price: 630, percent: 0 },
       { shortName: 'ETH', price: 12000, percent: 3.4 },
       { shortName: 'DOGE', price: 630, percent: 9.4 },
-    ]" />
+    ]"
+  />
 </header>

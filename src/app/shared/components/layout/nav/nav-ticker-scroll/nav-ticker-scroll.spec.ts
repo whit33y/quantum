@@ -8,9 +8,8 @@ describe('NavTickerScroll', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavTickerScroll]
-    })
-    .compileComponents();
+      imports: [NavTickerScroll],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavTickerScroll);
     component = fixture.componentInstance;

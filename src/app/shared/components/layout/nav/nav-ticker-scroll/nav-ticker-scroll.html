@@ -2,18 +2,26 @@
   <div class="flex ticker-scroll w-max text-[11px] font-medium uppercase">
     <div class="flex gap-12 pr-12">
       @for (element of tickerElements(); track $index) {
-      <div class="flex gap-12">
-        <span class="flex items-center gap-2 text-white">{{ element.shortName }}
-          <span [class]="getColor(element.percent)">${{ element.price }} ({{ element.percent }}%)</span></span>
-      </div>
+        <div class="flex gap-12">
+          <span class="flex items-center gap-2 text-white"
+            >{{ element.shortName }}
+            <span [class]="getColor(element.percent)"
+              >${{ element.price }} ({{ element.percent }}%)</span
+            ></span
+          >
+        </div>
       }
     </div>
     <div class="flex gap-12 pr-12" aria-hidden="true">
       @for (element of tickerElements(); track $index) {
-      <div class="flex gap-12">
-        <span class="flex items-center gap-2 text-white">{{ element.shortName }}
-          <span [class]="getColor(element.percent)">${{ element.price }} ({{ element.percent }}%)</span></span>
-      </div>
+        <div class="flex gap-12">
+          <span class="flex items-center gap-2 text-white"
+            >{{ element.shortName }}
+            <span [class]="getColor(element.percent)"
+              >${{ element.price }} ({{ element.percent }}%)</span
+            ></span
+          >
+        </div>
       }
     </div>
   </div>

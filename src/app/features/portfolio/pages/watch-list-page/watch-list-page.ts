@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './watch-list-page.html',
   styleUrl: './watch-list-page.css',
 })
-export class WatchListPage {
-
-}
+export class WatchListPage {}
