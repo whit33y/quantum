@@ -14,10 +14,13 @@ export class App {
   private authService = inject(AuthService);
 
   protected isLoggedIn = signal(false);
+  protected isVerified = signal(false);
   constructor() {
     effect(() => {
       const loggedIn = this.authService.isLoggedIn();
       this.isLoggedIn.set(loggedIn);
+      const isVerified = this.authService.isEmailVerified();
+      this.isVerified.set(isVerified);
     });
   }
 }

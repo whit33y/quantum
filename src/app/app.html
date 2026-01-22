@@ -1,4 +1,4 @@
-@if (isLoggedIn()) {
+@if (isLoggedIn() && isVerified()) {
   <app-nav />
 }
 <router-outlet />
