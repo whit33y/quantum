@@ -1,0 +1,33 @@
+<div
+  class="bg-zinc-800 border border-white/5 rounded-2xl p-4 relative overflow-hidden h-full flex justify-between"
+>
+  <div class="flex items-center w-1/3">
+    <img [src]="img()" class="w-10 h-10" [alt]="`Logo of ${name()}`" />
+    <div>
+      <h3 class="text-white text-xl font-semibold mx-2">{{ name() }}</h3>
+    </div>
+  </div>
+  <div class="flex items-center w-1/3">
+    <div class="flex flex-col w-full items-center">
+      <p class="text-sm tracking-tight mx-1 text-blue-400">Current price: $ {{ currentPrice() }}</p>
+      <p class="text-sm tracking-tight mx-1 text-emerald-400">ATH: $ {{ ath() }}</p>
+      <p class="text-sm tracking-tight mx-1 text-rose-400">ATL: $ {{ atl() }}</p>
+    </div>
+  </div>
+  <div class="flex flex-col justify-center items-end w-1/3">
+    @if (!favorite()) {
+      <button
+        class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
+      >
+        <i-lucide [img]="StarIcon" class="text-white w-6 h-6"></i-lucide>
+      </button>
+    } @else {
+      <button
+        class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
+      >
+        <i-lucide [img]="XIcon" class="text-white w-6 h-6"></i-lucide>
+      </button>
+    }
+    <p class="text-[10px] text-white">Watchlist</p>
+  </div>
+</div>

@@ -10,10 +10,11 @@ import { AssetCard } from '../../../../shared/components/asset-card/asset-card';
 import { ListCard } from '../../../../shared/components/list-card/list-card';
 import { BasicBarChart } from '../../../../shared/components/basic-bar-chart/basic-bar-chart';
 import { BasicLineChart } from '../../../../shared/components/basic-line-chart/basic-line-chart';
+import { DashboardListCard } from '../../../components/dashboard-list-card/dashboard-list-card';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [InfoCard, AssetCard, ListCard, BasicBarChart, BasicLineChart],
+  imports: [InfoCard, AssetCard, ListCard, BasicBarChart, BasicLineChart, DashboardListCard],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -22,12 +23,13 @@ export class DashboardPage implements OnInit {
   private coinApiService = inject(CoinApiService);
   private userDataService = inject(UserDataService);
 
-  coins: CryptoMarket[] = [];
-  userData: UserFavoriteResponse | null = null;
-
   coinInfo = signal<CoinDetails | null>(null);
   userFavoritesSymbol = signal<string[]>([]);
   watchlistTrend = signal<number>(0);
+  top50list = signal<CryptoMarket[]>([]);
+
+  coins: CryptoMarket[] = [];
+  userData: UserFavoriteResponse | null = null;
 
   chartLabels = ['1h', '24h', '7d', '14d', '30d'];
 
@@ -61,6 +63,7 @@ export class DashboardPage implements OnInit {
   readonly WalletIcon = WalletIcon;
 
   async ngOnInit(): Promise<void> {
+    //loading data for asset card
     this.coinApiService.getCoinDetails('ethereum', true).subscribe({
       next: (response) => {
         this.coinInfo.set(response);
@@ -68,6 +71,7 @@ export class DashboardPage implements OnInit {
       },
     });
 
+    //loading data for charts
     this.coinApiService.getMarketChart('bitcoin', '30').subscribe({
       next: (response) => {
         this.lineChartName.set('bitcoin');
@@ -81,6 +85,7 @@ export class DashboardPage implements OnInit {
       },
     });
 
+    //loading data for watchlist
     const userId = this.authService.currentUser()?.$id;
     if (userId) {
       try {
@@ -111,5 +116,14 @@ export class DashboardPage implements OnInit {
         console.error('Failed to load user favorites:', error);
       }
     }
+    //loading top 50
+    this.coinApiService.getMarkets('usd', 50, 1).subscribe({
+      next: (response) => {
+        this.top50list.set(response);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 }
