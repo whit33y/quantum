@@ -6,10 +6,11 @@ import {
   registerInitialData,
 } from '../../models/auth-form.model';
 import { Input } from '../../../../shared/components/input/input';
+import { Button } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-register-form',
-  imports: [Input, FormField],
+  imports: [Input, FormField, Button],
   templateUrl: './register-form.html',
   styleUrl: './register-form.css',
 })

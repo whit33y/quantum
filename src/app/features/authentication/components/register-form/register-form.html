@@ -1,4 +1,9 @@
-<form>
+<form
+  class="flex flex-col items-center w-120 h-120 rounded-2xl bg-zinc-800 shadow-md border border-white/5"
+>
+  <div class="flex items-center gap-2 py-4">
+    <span class="text-3xl font-bold tracking-wide text-white">QUANTUM</span>
+  </div>
   <app-input
     label="Email"
     placeholder="your@email.com"
@@ -18,7 +23,12 @@
     type="password"
     [formField]="registerForm.confirmPassword"
   />
-  <button (click)="onSubmit(); $event.preventDefault()" [disabled]="registerForm().invalid()">
-    Register
-  </button>
+  <div class="w-80 my-4">
+    <app-button
+      text="Register"
+      (buttonClick)="onSubmit(); $event.preventDefault()"
+      [disabled]="registerForm().invalid()"
+      [variant]="registerForm().invalid() ? 'disabled' : 'primary'"
+    />
+  </div>
 </form>
