@@ -15,7 +15,7 @@ Chart.register(...registerables);
   selector: 'app-basic-bar-chart',
   standalone: true,
   template: `
-    <div class="relative w-full h-64 p-2 rounded-2xl bg-zinc-800 border border-white/5">
+    <div class="relative w-full h-full p-2 rounded-2xl bg-zinc-800 border border-white/5">
       <h3 class="font-semibold text-sm text-zinc-300 uppercase tracking-wider mb-4">
         {{ label() }}
       </h3>

@@ -50,24 +50,24 @@ export class DashboardPage implements OnInit {
   readonly WalletIcon = WalletIcon;
 
   async ngOnInit(): Promise<void> {
-    // this.coinApiService.getCoinDetails('doge', true).subscribe({
-    //   next: (response) => {
-    //     this.coinInfo.set(response);
-    //   },
-    // });
+    this.coinApiService.getCoinDetails('doge', true).subscribe({
+      next: (response) => {
+        this.coinInfo.set(response);
+      },
+    });
 
-    // this.coinApiService.getMarketChart('bitcoin', '30').subscribe({
-    //   next: (response) => {
-    //     this.lineChartName.set('bitcoin');
-    //     const prices = response.prices;
-    //     this.lineChartLabels.set(
-    //       prices.map((p) =>
-    //         new Date(p[0]).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
-    //       ),
-    //     );
-    //     this.lineChartData.set(prices.map((p) => p[1]));
-    //   },
-    // });
+    this.coinApiService.getMarketChart('bitcoin', '30').subscribe({
+      next: (response) => {
+        this.lineChartName.set('bitcoin');
+        const prices = response.prices;
+        this.lineChartLabels.set(
+          prices.map((p) =>
+            new Date(p[0]).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+          ),
+        );
+        this.lineChartData.set(prices.map((p) => p[1]));
+      },
+    });
 
     const userId = this.authService.currentUser()?.$id;
     if (userId) {

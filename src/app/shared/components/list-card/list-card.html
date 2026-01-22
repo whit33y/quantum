@@ -1,4 +1,4 @@
-<div class="bg-zinc-800 rounded-2xl p-5 overflow-hidden text-white">
+<div class="bg-zinc-800 h-full w-full rounded-2xl p-5 overflow-hidden text-white">
   <div class="flex justify-between items-center mb-4">
     <h3 class="font-semibold text-sm text-zinc-400">{{ listTitle() }}</h3>
   </div>
@@ -26,6 +26,8 @@
           </p>
         </div>
       </div>
+    } @empty {
+      <p class="text-white text-center">Add coins to watchlist to see them here!</p>
     }
   </div>
 </div>
