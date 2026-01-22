@@ -26,8 +26,19 @@ export class DashboardPage implements OnInit {
   userData: UserFavoriteResponse | null = null;
 
   coinInfo = signal<CoinDetails | null>(null);
+  userFavoritesSymbol = signal<string[]>([]);
+  watchlistTrend = signal<number>(0);
 
   chartLabels = ['1h', '24h', '7d', '14d', '30d'];
+
+  get watchlistElements() {
+    return this.coins.map((coin) => ({
+      elementName: coin.name,
+      elementCode: coin.symbol.toUpperCase(),
+      elementPrice: coin.current_price,
+      elementStats: coin.price_change_percentage_24h,
+    }));
+  }
 
   chartData = computed(() => {
     const info = this.coinInfo();
@@ -57,12 +68,6 @@ export class DashboardPage implements OnInit {
       },
     });
 
-    // this.coinApiService.getMarkets('usd', 5, 1, ['btc', 'eth']).subscribe({
-    //   next: (response) => {
-    //     console.log(response);
-    //   }
-    // })
-
     this.coinApiService.getMarketChart('bitcoin', '30').subscribe({
       next: (response) => {
         this.lineChartName.set('bitcoin');
@@ -80,18 +85,31 @@ export class DashboardPage implements OnInit {
     if (userId) {
       try {
         this.userData = await this.userDataService.getUserFavorite(userId);
-        console.log('User favorites:', this.userData);
+        console.log(this.userData);
+
+        const symbols = this.userData?.items?.slice(0, 5).map((item) => item.coinId) ?? [];
+
+        this.userFavoritesSymbol.set(symbols);
+
+        if (symbols.length > 0) {
+          this.coinApiService.getMarkets('usd', symbols.length, 1, symbols).subscribe({
+            next: (response) => {
+              this.coins = response;
+              const trend = response.reduce(
+                (sum, coin) => sum + (coin.price_change_percentage_24h ?? 0),
+                0,
+              );
+              this.watchlistTrend.set(trend);
+              console.log('Favorite markets:', response);
+            },
+            error: (error) => {
+              console.error('Failed to load markets:', error);
+            },
+          });
+        }
       } catch (error) {
         console.error('Failed to load user favorites:', error);
       }
     }
-    // if (userId) {
-    //   try {
-    //     const response = await this.userDataService.addFavoriteCoin(userId, 'btc');
-    //     console.log(response, this.authService.currentUser());
-    //   } catch (error) {
-    //     console.error('Failed to add user', error);
-    //   }
-    // }
   }
 }

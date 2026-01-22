@@ -14,42 +14,7 @@
       fourthElement="Change 24h"
       [fourthElementDescription]="`% ${coinInfo()?.market_data?.price_change_percentage_24h}`"
     />
-    <app-list-card
-      class="p-1 h-93"
-      listTitle="Watchlist"
-      [elements]="[
-        {
-          elementName: 'Bitcoin',
-          elementCode: 'BTC',
-          elementPrice: 76000,
-          elementStats: -12,
-        },
-        {
-          elementName: 'Ethereum',
-          elementCode: 'ETH',
-          elementPrice: 12000,
-          elementStats: 10,
-        },
-        {
-          elementName: 'Bitcoin',
-          elementCode: 'BTC',
-          elementPrice: 76000,
-          elementStats: -12,
-        },
-        {
-          elementName: 'Ethereum',
-          elementCode: 'ETH',
-          elementPrice: 12000,
-          elementStats: 10,
-        },
-        {
-          elementName: 'Ethereum',
-          elementCode: 'ETH',
-          elementPrice: 12000,
-          elementStats: 10,
-        },
-      ]"
-    />
+    <app-list-card class="p-1 h-93" listTitle="Watchlist" [elements]="watchlistElements" />
   </div>
   <div class="flex flex-col w-7/10">
     <div class="flex flex-row w-full">
@@ -57,28 +22,10 @@
         class="w-full p-2"
         [mainIcon]="WalletIcon"
         [secondIcon]="TrendingUp"
-        title="Total net worth"
-        value="123.07$"
-        info="12% of all time"
-        infoColor="red"
-      />
-      <app-info-card
-        class="w-full p-2"
-        [mainIcon]="WalletIcon"
-        [secondIcon]="TrendingUp"
-        title="Total net worth"
-        value="123.07$"
-        info="12% of all time"
-        infoColor="red"
-      />
-      <app-info-card
-        class="w-full p-2"
-        [mainIcon]="WalletIcon"
-        [secondIcon]="TrendingUp"
-        title="Total net worth"
-        value="123.07$"
-        info="12% of all time"
-        infoColor="red"
+        title="Top 5 Watchlist Trends"
+        [value]="`% ${watchlistTrend().toFixed(2)}`"
+        [info]="watchlistTrend() > 0 ? 'Positive trends' : 'Negative trends'"
+        [infoColor]="watchlistTrend() > 0 ? 'green' : 'red'"
       />
     </div>
     <div class="flex flex-col">

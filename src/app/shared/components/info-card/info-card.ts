@@ -9,7 +9,7 @@ import { LucideAngularModule, LucideIconData } from 'lucide-angular';
 })
 export class InfoCard {
   title = input<string>('');
-  value = input<string>('');
+  value = input<string | number>('');
   info = input<string>('');
   mainIcon = input<LucideIconData | undefined>(undefined);
   secondIcon = input<LucideIconData | undefined>(undefined);
