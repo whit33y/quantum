@@ -13,6 +13,7 @@ export class DashboardListCard {
   readonly XIcon = X;
 
   name = input<string>('');
+  id = input<string>('');
   symbol = input<string>('');
   img = input<string>('');
   ath = input<number>(0);
