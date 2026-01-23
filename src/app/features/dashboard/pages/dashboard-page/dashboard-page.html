@@ -49,11 +49,13 @@
   @for (element of top50list(); track element.name) {
     <div class="h-26 m-1">
       <app-dashboard-list-card
+        [symbol]="element.symbol"
         [img]="element.image"
         [name]="element.name"
         [ath]="element.ath"
         [atl]="element.atl"
         [currentPrice]="element.current_price"
+        (watchlistId)="manageWatchlist($event)"
       />
     </div>
   }

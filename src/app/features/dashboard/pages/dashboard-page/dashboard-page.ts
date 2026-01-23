@@ -167,4 +167,9 @@ export class DashboardPage implements OnInit {
 
     return chart.prices.map((p) => p[1]);
   });
+
+  manageWatchlist(symbol: string) {
+    console.log(symbol);
+    //add or remove from watchlist
+  }
 }
