@@ -5,5 +5,7 @@
     [lineChartLabels]="lineChartLabels()"
     [chartData]="chartData()"
     [chartLabel]="chartLabels"
+    (watchlistId)="manageWatchlist($event!)"
+    [favorite]="isFavorite(this.coinDetails()?.symbol!)"
   />
 </div>

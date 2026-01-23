@@ -81,6 +81,23 @@
     }
   </div>
   <div class="w-7/10 p-4 pl-6 relative overflow-hidden h-full flex flex-col">
+    <div class="flex justify-end mr-4">
+      @if (!favorite()) {
+        <button
+          (click)="emitWatchlistId(coinDetails()?.symbol); $event.stopPropagation()"
+          class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
+        >
+          <i-lucide [img]="StarIcon" class="text-white w-6 h-6"></i-lucide>
+        </button>
+      } @else {
+        <button
+          (click)="emitWatchlistId(coinDetails()?.symbol); $event.stopPropagation()"
+          class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
+        >
+          <i-lucide [img]="XIcon" class="text-white w-6 h-6"></i-lucide>
+        </button>
+      }
+    </div>
     <app-basic-line-chart
       class="p-2 h-85"
       [label]="`Last 30 days of ${coinDetails()?.name}`"
