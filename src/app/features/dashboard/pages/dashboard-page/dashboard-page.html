@@ -1,53 +1,65 @@
-<app-info-card
-  [mainIcon]="WalletIcon"
-  [secondIcon]="TrendingUp"
-  title="Total net worth"
-  value="123.07$"
-  info="12% of all time"
-  infoColor="red"
-/>
-
-<app-asset-card
-  assetText="Asset"
-  assetName="Bitcoin"
-  assetDescription="Bitcoin | Satoshi"
-  firstElement="ATH"
-  firstElementDescription="83000$"
-  secondElement="Created in"
-  secondElementDescription="2009"
-  thirdElement="Current Price"
-  thirdElementDescription="70000$"
-  fourthElement="Change"
-  fourthElementDescription="-19%"
-/>
-
-<app-list-card
-  listTitle="Watchlist"
-  [elements]="[
-    {
-      elementName: 'Bitcoin',
-      elementCode: 'BTC',
-      elementPrice: 76000,
-      elementStats: -12,
-    },
-    {
-      elementName: 'Ethereum',
-      elementCode: 'ETH',
-      elementPrice: 12000,
-      elementStats: 10,
-    },
-  ]"
-/>
-
-<div class="space-y-4">
-  <!-- <app-basic-bar-chart
-    [label]="`Price change % of ` + coinInfo()?.name"
-    [labels]="chartLabels"
-    [data]="chartData()"
-  />
-  <app-basic-line-chart
-    [label]="`Price History of ` + lineChartName()"
-    [labels]="lineChartLabels()"
-    [data]="lineChartData()"
-  /> -->
+<div class="flex mx-40 my-4">
+  <div class="flex flex-col w-3/10">
+    <app-asset-card
+      class="p-2 h-110"
+      assetText="Asset"
+      [assetName]="coinInfo()?.name"
+      [assetDescription]="`${coinInfo()?.name} | ${coinInfo()?.symbol}`"
+      firstElement="Rank"
+      [firstElementDescription]="coinInfo()?.market_cap_rank"
+      secondElement="Created in"
+      [secondElementDescription]="coinInfo()?.genesis_date"
+      thirdElement="Current Price"
+      [thirdElementDescription]="`$ ${coinInfo()?.market_data?.current_price?.['usd']}`"
+      fourthElement="Change 24h"
+      [fourthElementDescription]="`% ${coinInfo()?.market_data?.price_change_percentage_24h}`"
+    />
+    <app-list-card class="p-1 h-93" listTitle="Watchlist" [elements]="watchlistElements" />
+  </div>
+  <div class="flex flex-col w-7/10">
+    <div class="flex flex-row w-full">
+      <app-info-card
+        class="w-full p-2"
+        [mainIcon]="WalletIcon"
+        [secondIcon]="infoIcon"
+        title="Top 5 Watchlist Trends"
+        [value]="`% ${watchlistTrend().toFixed(2)}`"
+        [info]="trendInfo"
+        [infoColor]="infoColor"
+        [empty]="watchlistElements.length > 0"
+        emptyText="Add coinst to watchlist to see trends!"
+      />
+    </div>
+    <div class="flex flex-col">
+      <app-basic-line-chart
+        class="p-2 h-85"
+        label="Last 30 days of bitcoin"
+        [labels]="lineChartLabels()"
+        [data]="lineChartData()"
+      />
+      <app-basic-bar-chart
+        class="p-2 h-86"
+        [label]="`Price change % of ` + coinInfo()?.name"
+        [labels]="chartLabels"
+        [data]="chartData()"
+      />
+    </div>
+  </div>
+</div>
+<div class="flex flex-col mx-40">
+  <h2 class="text-white text-2xl font-bold text-center mb-2">Top 50 coins list</h2>
+  @for (element of top50list(); track element.name) {
+    <div class="h-26 m-1">
+      <app-dashboard-list-card
+        [symbol]="element.symbol"
+        [img]="element.image"
+        [name]="element.name"
+        [ath]="element.ath"
+        [atl]="element.atl"
+        [favorite]="isFavorite(element.symbol)"
+        [currentPrice]="element.current_price"
+        (watchlistId)="manageWatchlist($event)"
+      />
+    </div>
+  }
 </div>

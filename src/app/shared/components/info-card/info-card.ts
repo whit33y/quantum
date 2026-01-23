@@ -9,11 +9,13 @@ import { LucideAngularModule, LucideIconData } from 'lucide-angular';
 })
 export class InfoCard {
   title = input<string>('');
-  value = input<string>('');
+  value = input<string | number>('');
   info = input<string>('');
   mainIcon = input<LucideIconData | undefined>(undefined);
   secondIcon = input<LucideIconData | undefined>(undefined);
   infoColor = input<'white' | 'green' | 'red'>('white');
+  empty = input<boolean>(false);
+  emptyText = input<string>('');
 
   getInfoColor(color: 'white' | 'green' | 'red') {
     if (color === 'white') return 'text-white';

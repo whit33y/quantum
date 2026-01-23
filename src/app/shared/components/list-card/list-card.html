@@ -1,9 +1,11 @@
-<div class="bg-zinc-800 rounded-2xl p-5 overflow-hidden text-white">
+<div
+  class="bg-zinc-800 h-full w-full rounded-2xl p-5 overflow-hidden text-white border border-white/5"
+>
   <div class="flex justify-between items-center mb-4">
     <h3 class="font-semibold text-sm text-zinc-400">{{ listTitle() }}</h3>
   </div>
   <div class="space-y-3">
-    @for (element of elements(); track element.elementCode) {
+    @for (element of elements(); track $index) {
       <div
         class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg transition-all cursor-pointer group"
       >
@@ -26,6 +28,8 @@
           </p>
         </div>
       </div>
+    } @empty {
+      <p class="text-white text-center">Add coins to watchlist to see them here!</p>
     }
   </div>
 </div>

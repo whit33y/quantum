@@ -49,6 +49,15 @@ export class UserDataService {
     return response;
   }
 
+  async deleteFavoriteCoin(id: string) {
+    const response = await tablesDb.deleteRow({
+      databaseId: environment.appwriteDatabaseId,
+      tableId: environment.appwriteUserFavorite,
+      rowId: id,
+    });
+    return response;
+  }
+
   async getUserWallet(userId: string): Promise<userWalletResponse> {
     const response = await tablesDb.listRows<UserWalletDocument>({
       databaseId: environment.appwriteDatabaseId,
