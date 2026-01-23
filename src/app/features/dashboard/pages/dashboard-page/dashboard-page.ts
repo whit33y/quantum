@@ -10,7 +10,7 @@ import { AssetCard } from '../../../../shared/components/asset-card/asset-card';
 import { ListCard } from '../../../../shared/components/list-card/list-card';
 import { BasicBarChart } from '../../../../shared/components/basic-bar-chart/basic-bar-chart';
 import { BasicLineChart } from '../../../../shared/components/basic-line-chart/basic-line-chart';
-import { DashboardListCard } from '../../../components/dashboard-list-card/dashboard-list-card';
+import { DashboardListCard } from '../../components/dashboard-list-card/dashboard-list-card';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -109,7 +109,6 @@ export class DashboardPage implements OnInit {
   coinstWatchListEffect = effect(() => {
     const data = this.coinsWatchlist();
     if (!data.length) return;
-
     const trend = data.reduce((sum, coin) => sum + (coin.price_change_percentage_24h ?? 0), 0);
     this.watchlistTrend.set(trend);
   });

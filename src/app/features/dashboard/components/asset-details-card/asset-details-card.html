@@ -1,0 +1,114 @@
+<div
+  class="flex bg-zinc-800 rounded-2xl p-4 relative overflow-hidden group w-full h-full border border-white/5"
+>
+  <div
+    class="w-3/10 flex flex-col items-center justify-center h-full gap-4 border-r border-white/5"
+  >
+    @if (coinDetails(); as coin) {
+      <div class="w-20 h-20 rounded-2xl flex items-center justify-center mb-2 bg-zinc-700/30">
+        <img [src]="coin.image.large" [alt]="coin.name" class="w-16 h-16 object-contain" />
+      </div>
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-white mb-1">{{ coin.name }}</h2>
+        <p class="text-zinc-500 font-medium tracking-wider text-sm">
+          {{ coin.symbol | uppercase }}
+        </p>
+      </div>
+
+      <div class="w-full h-px bg-white/5 my-2"></div>
+
+      <div class="w-full space-y-3 px-2">
+        <div class="flex items-center justify-between text-sm bg-zinc-700/50 p-3 rounded-xl">
+          <div class="flex items-center gap-2 text-zinc-500">
+            <i-lucide [img]="HashIcon" class="w-4 h-4"></i-lucide>
+            <span>Rank</span>
+          </div>
+          <span class="text-white font-medium">#{{ coin.market_cap_rank }}</span>
+        </div>
+
+        @if (coin.genesis_date) {
+          <div class="flex items-center justify-between text-sm bg-zinc-700/50 p-3 rounded-xl">
+            <div class="flex items-center gap-2 text-zinc-500">
+              <i-lucide [img]="CalendarIcon" class="w-4 h-4"></i-lucide>
+              <span>Genesis</span>
+            </div>
+            <span class="text-white font-medium">{{ coin.genesis_date | date }}</span>
+          </div>
+        }
+
+        @if (coin.hashing_algorithm) {
+          <div class="flex items-center justify-between text-sm bg-zinc-700/50 p-3 rounded-xl">
+            <div class="flex items-center gap-2 text-zinc-500">
+              <i-lucide [img]="CpuIcon" class="w-4 h-4"></i-lucide>
+              <span>Algorithm</span>
+            </div>
+            <span class="text-white font-medium">{{ coin.hashing_algorithm }}</span>
+          </div>
+        }
+
+        @if (coin.market_data.current_price['usd']) {
+          <div
+            class="flex flex-col gap-1 bg-zinc-700/50 p-3 rounded-xl mt-2 border border-emerald-500/20"
+          >
+            <p class="text-xs text-zinc-400 font-medium">Current Price</p>
+            <p class="text-2xl font-bold text-emerald-400">
+              {{ coin.market_data.current_price['usd'] | currency: 'USD' : 'symbol' : '1.2-2' }}
+            </p>
+          </div>
+        }
+
+        <div class="grid grid-cols-2 gap-2 mt-1">
+          <div
+            class="bg-zinc-700/50 p-3 rounded-xl flex flex-col items-center justify-center gap-1"
+          >
+            <i-lucide [img]="TrendingUpIcon" class="w-4 h-4 text-emerald-400 mb-1"></i-lucide>
+            <span class="text-xs text-zinc-400 uppercase font-bold">Bullish</span>
+            <span class="text-lg font-bold text-white"
+              >{{ coin.sentiment_votes_up_percentage | number: '1.0-0' }}%</span
+            >
+          </div>
+          <div
+            class="bg-zinc-700/50 p-3 rounded-xl flex flex-col items-center justify-center gap-1"
+          >
+            <i-lucide [img]="TrendingDownIcon" class="w-4 h-4 text-rose-400 mb-1"></i-lucide>
+            <span class="text-xs text-zinc-400 uppercase font-bold">Bearish</span>
+            <span class="text-lg font-bold text-white"
+              >{{ coin.sentiment_votes_down_percentage | number: '1.0-0' }}%</span
+            >
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+  <div class="w-7/10 p-4 pl-6 relative overflow-hidden h-full flex flex-col">
+    <div class="flex justify-end mr-4">
+      @if (!favorite()) {
+        <button
+          (click)="emitWatchlistId(coinDetails()?.symbol); $event.stopPropagation()"
+          class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
+        >
+          <i-lucide [img]="StarIcon" class="text-white w-6 h-6"></i-lucide>
+        </button>
+      } @else {
+        <button
+          (click)="emitWatchlistId(coinDetails()?.symbol); $event.stopPropagation()"
+          class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
+        >
+          <i-lucide [img]="XIcon" class="text-white w-6 h-6"></i-lucide>
+        </button>
+      }
+    </div>
+    <app-basic-line-chart
+      class="p-2 h-85"
+      [label]="`Last 30 days of ${coinDetails()?.name}`"
+      [labels]="lineChartLabels()"
+      [data]="lineChartData()"
+    />
+    <app-basic-bar-chart
+      class="p-2 h-86"
+      [label]="`Price change % of ` + coinDetails()?.name"
+      [labels]="chartLabel()"
+      [data]="chartData()"
+    />
+  </div>
+</div>
