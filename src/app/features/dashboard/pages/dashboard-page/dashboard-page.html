@@ -26,6 +26,8 @@
         [value]="`% ${watchlistTrend().toFixed(2)}`"
         [info]="trendInfo"
         [infoColor]="infoColor"
+        [empty]="watchlistElements.length > 0"
+        emptyText="Add coinst to watchlist to see trends!"
       />
     </div>
     <div class="flex flex-col">
