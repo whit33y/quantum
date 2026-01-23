@@ -21,11 +21,11 @@
       <app-info-card
         class="w-full p-2"
         [mainIcon]="WalletIcon"
-        [secondIcon]="TrendingUp"
+        [secondIcon]="infoIcon"
         title="Top 5 Watchlist Trends"
         [value]="`% ${watchlistTrend().toFixed(2)}`"
-        [info]="watchlistTrend() > 0 ? 'Positive trends' : 'Negative trends'"
-        [infoColor]="watchlistTrend() > 0 ? 'green' : 'red'"
+        [info]="trendInfo"
+        [infoColor]="infoColor"
       />
     </div>
     <div class="flex flex-col">
@@ -54,6 +54,7 @@
         [name]="element.name"
         [ath]="element.ath"
         [atl]="element.atl"
+        [favorite]="isFavorite(element.symbol)"
         [currentPrice]="element.current_price"
         (watchlistId)="manageWatchlist($event)"
       />

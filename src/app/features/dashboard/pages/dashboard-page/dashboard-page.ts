@@ -5,7 +5,7 @@ import { CoinApiService } from '../../services/coin-api-service';
 import { UserDataService } from '../../services/user-data-service';
 import { UserFavoriteResponse } from '../../../../shared/models/user-data.model';
 import { InfoCard } from '../../../../shared/components/info-card/info-card';
-import { TrendingUp, WalletIcon } from 'lucide-angular';
+import { TrendingDown, TrendingUp, TrendingUpDown, WalletIcon } from 'lucide-angular';
 import { AssetCard } from '../../../../shared/components/asset-card/asset-card';
 import { ListCard } from '../../../../shared/components/list-card/list-card';
 import { BasicBarChart } from '../../../../shared/components/basic-bar-chart/basic-bar-chart';
@@ -26,8 +26,6 @@ export class DashboardPage implements OnInit {
   userFavoritesSymbol = signal<string[]>([]);
   watchlistTrend = signal<number>(0);
 
-  userData: UserFavoriteResponse | null = null;
-
   chartLabels = ['1h', '24h', '7d', '14d', '30d'];
 
   chartData = computed(() => {
@@ -44,33 +42,69 @@ export class DashboardPage implements OnInit {
   });
 
   readonly TrendingUp = TrendingUp;
+  readonly TrendingDown = TrendingDown;
+  readonly TrendingUpDown = TrendingUpDown;
   readonly WalletIcon = WalletIcon;
 
+  userData = signal<UserFavoriteResponse | undefined>(undefined);
   async ngOnInit(): Promise<void> {
     //loading data for asset card
-    this.getCoinDetails('ethereum', this.coinInfo);
+    this.getCoinDetails('bitcoin', this.coinInfo);
     //loading data for charts
     this.getMarketChart('bitcoin', '30', this.marketChart, 'usd');
 
     //loading data for watchlist
-    const userId = this.authService.currentUser()?.$id;
-    if (userId) {
-      try {
-        this.userData = await this.userDataService.getUserFavorite(userId);
-        const symbols = this.userData?.items?.slice(0, 5).map((item) => item.coinId) ?? [];
-        this.userFavoritesSymbol.set(symbols);
-        if (symbols.length > 0) {
-          this.getMarkets('usd', symbols.length, 1, this.coinsWatchlist, symbols);
-        }
-      } catch (error) {
-        console.error('Failed to load user favorites:', error);
-      }
-    }
+    await this.loadWatchlist();
+
     //loading top 50
     this.getMarkets('usd', 50, 1, this.top50list);
   }
 
+  async loadWatchlist() {
+    const userId = this.authService.currentUser()?.['$id'];
+    if (!userId) return;
+    try {
+      const favorites = await this.userDataService.getUserFavorite(userId);
+      this.userData.set(favorites);
+      const symbols = favorites.items.map((item) => item.coinId);
+      this.userFavoritesSymbol.set(symbols);
+      if (symbols.length > 0) {
+        this.getMarkets('usd', symbols.length, 1, this.coinsWatchlist, symbols);
+      } else {
+        this.coinsWatchlist.set([]);
+      }
+    } catch (error) {
+      console.error('Failed to load user favorites:', error);
+    }
+  }
+
+  isFavorite(symbol: string) {
+    if (this.userFavoritesSymbol().includes(symbol, 0)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   coinsWatchlist = signal<CryptoMarket[]>([]);
+
+  get trendInfo() {
+    if (this.watchlistTrend() > 0) return 'Positive';
+    if (this.watchlistTrend() < 0) return 'Negative';
+    return 'Neutral';
+  }
+
+  get infoColor() {
+    if (this.watchlistTrend() > 0) return 'green';
+    if (this.watchlistTrend() < 0) return 'red';
+    return 'white';
+  }
+
+  get infoIcon() {
+    if (this.watchlistTrend() > 0) return TrendingUp;
+    if (this.watchlistTrend() < 0) return TrendingDown;
+    return TrendingUpDown;
+  }
 
   coinstWatchListEffect = effect(() => {
     const data = this.coinsWatchlist();
@@ -168,8 +202,21 @@ export class DashboardPage implements OnInit {
     return chart.prices.map((p) => p[1]);
   });
 
-  manageWatchlist(symbol: string) {
-    console.log(symbol);
-    //add or remove from watchlist
+  async manageWatchlist(symbol: string) {
+    const userId = this.authService.currentUser()?.['$id'];
+    if (!userId) return;
+
+    try {
+      const favoriteItem = this.userData()?.items.find((item) => item.coinId === symbol);
+
+      if (favoriteItem) {
+        await this.userDataService.deleteFavoriteCoin(favoriteItem.$id);
+      } else {
+        await this.userDataService.addFavoriteCoin(userId, symbol);
+      }
+      await this.loadWatchlist();
+    } catch (error) {
+      console.error('Error managing watchlist:', error);
+    }
   }
 }

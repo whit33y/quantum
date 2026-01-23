@@ -25,6 +25,7 @@
       </button>
     } @else {
       <button
+        (click)="emitWatchlistId(symbol()); $event.stopPropagation()"
         class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
       >
         <i-lucide [img]="XIcon" class="text-white w-6 h-6"></i-lucide>
