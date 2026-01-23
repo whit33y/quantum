@@ -70,13 +70,5 @@
       </div>
     </div>
   </div>
-  <app-nav-ticker-scroll
-    [tickerElements]="[
-      { shortName: 'BTC', price: 63000, percent: -6.4 },
-      { shortName: 'ETH', price: 12000, percent: 3.4 },
-      { shortName: 'DOGE', price: 630, percent: 0 },
-      { shortName: 'ETH', price: 12000, percent: 3.4 },
-      { shortName: 'DOGE', price: 630, percent: 9.4 },
-    ]"
-  />
+  <app-nav-ticker-scroll [tickerElements]="tickerListElements" />
 </header>

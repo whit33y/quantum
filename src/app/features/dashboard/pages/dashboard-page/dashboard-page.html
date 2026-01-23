@@ -31,7 +31,7 @@
     <div class="flex flex-col">
       <app-basic-line-chart
         class="p-2 h-85"
-        [label]="`Price History of ` + lineChartName()"
+        label="Last 30 days of bitcoin"
         [labels]="lineChartLabels()"
         [data]="lineChartData()"
       />

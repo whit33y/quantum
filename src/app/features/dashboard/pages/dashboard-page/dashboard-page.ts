@@ -50,7 +50,6 @@ export class DashboardPage implements OnInit {
     //loading data for asset card
     this.getCoinDetails('ethereum', this.coinInfo);
     //loading data for charts
-    this.lineChartName.set('bitcoin');
     this.getMarketChart('bitcoin', '30', this.marketChart, 'usd');
 
     //loading data for watchlist
@@ -150,7 +149,6 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  lineChartName = signal<string>('');
   lineChartLabels = computed(() => {
     const chart = this.marketChart();
     if (!chart) return [];
