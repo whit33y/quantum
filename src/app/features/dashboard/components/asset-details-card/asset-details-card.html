@@ -80,5 +80,18 @@
       </div>
     }
   </div>
-  <div class="w-7/10 p-4 pl-6 relative overflow-hidden h-full flex flex-col">right side</div>
+  <div class="w-7/10 p-4 pl-6 relative overflow-hidden h-full flex flex-col">
+    <app-basic-line-chart
+      class="p-2 h-85"
+      [label]="`Last 30 days of ${coinDetails()?.name}`"
+      [labels]="lineChartLabels()"
+      [data]="lineChartData()"
+    />
+    <app-basic-bar-chart
+      class="p-2 h-86"
+      [label]="`Price change % of ` + coinDetails()?.name"
+      [labels]="chartLabel()"
+      [data]="chartData()"
+    />
+  </div>
 </div>
