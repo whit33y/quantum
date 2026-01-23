@@ -1,10 +1,11 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { CoinApiService } from '../../services/coin-api-service';
 import { CoinDetails } from '../../../../shared/models/coin-api.model';
+import { AssetDetailsCard } from '../../components/asset-details-card/asset-details-card';
 
 @Component({
   selector: 'app-asset-details-page',
-  imports: [],
+  imports: [AssetDetailsCard],
   templateUrl: './asset-details-page.html',
   styleUrl: './asset-details-page.css',
 })
