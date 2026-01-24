@@ -7,7 +7,15 @@
       [lastAddedCoin]="watchlist()[watchlist().length - 1].name"
     />
     @for (element of watchlist(); track element.name) {
-      <app-watch-list-card />
+      <app-watch-list-card
+        [symbol]="element.symbol"
+        [img]="element.image"
+        [name]="element.name"
+        [ath]="element.ath"
+        [atl]="element.atl"
+        [id]="element.id"
+        [currentPrice]="element.current_price"
+      />
     }
   } @else if (loadingWatchlist()) {
     <p>Loading...</p>
