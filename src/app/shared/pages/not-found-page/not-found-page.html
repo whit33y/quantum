@@ -1,1 +1,9 @@
-<p>not-found-page works!</p>
+<div
+  class="flex flex-col items-center justify-center mx-40 my-4 text-white border border-white/5 bg-zinc-800 rounded-2xl p-6"
+>
+  <i-lucide [img]="CircleQuestionMark" class="w-40 h-40"></i-lucide>
+  <h1 class="text-6xl font-extrabold">404</h1>
+  <h2 class="text-2xl font-bold">Not found</h2>
+  <h3 class="text-xl">The resource requested could not be found on this app</h3>
+  <a [routerLink]="['/dashboard']" class="underline mt-4">Go back to dashboard</a>
+</div>
