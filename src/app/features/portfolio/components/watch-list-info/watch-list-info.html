@@ -1,0 +1,22 @@
+<div
+  class="bg-zinc-800 rounded-2xl p-4 relative overflow-hidden group h-full border border-white/5 text-white"
+>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-zinc-700/50 p-3 rounded-xl">
+      <p class="text-xs text-white/80 font-bold uppercase">Total Coins</p>
+      <p class="text-lg font-semibold text-white/50">
+        {{ watchListCount() }}
+      </p>
+    </div>
+
+    <div class="bg-zinc-700/50 p-3 rounded-xl">
+      <p class="text-xs text-white/80 font-bold uppercase">Last Added</p>
+      <p class="text-lg font-semibold text-white/50 truncate">
+        {{ lastAddedCoin() }}
+      </p>
+    </div>
+  </div>
+  <div class="flex justify-center items-start pt-4">
+    <h3 class="font-semibold text-xl text-zinc-400 uppercase tracking-wider">Your Watchlist</h3>
+  </div>
+</div>
