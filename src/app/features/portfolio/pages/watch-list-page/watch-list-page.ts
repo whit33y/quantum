@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core
 import { UserDataService } from '../../../dashboard/services/user-data-service';
 import { AuthService } from '../../../../core/services/auth-service';
 import { CoinApiService } from '../../../dashboard/services/coin-api-service';
-import { UserFavorite } from '../../../../shared/models/user-data.model';
+import { UserFavorite, UserFavoriteResponse } from '../../../../shared/models/user-data.model';
 import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 import { WatchListCard } from '../../components/watch-list-card/watch-list-card';
 import { WatchListInfo } from '../../components/watch-list-info/watch-list-info';
@@ -22,6 +22,7 @@ export class WatchListPage implements OnInit {
     await this.loadWatchlist();
   }
 
+  userData = signal<UserFavoriteResponse | undefined>(undefined);
   userFavorites = signal<UserFavorite[]>([]);
   watchlist = signal<CryptoMarket[]>([]);
 
@@ -31,6 +32,7 @@ export class WatchListPage implements OnInit {
     try {
       const favorites = await this.userDataService.getUserFavorite(userId);
       if (favorites) {
+        this.userData.set(favorites);
         this.userFavorites.set(favorites.items);
         const symbols = this.userFavorites().map((item) => item.coinId);
         if (symbols.length > 0) {
@@ -63,5 +65,27 @@ export class WatchListPage implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  async removeFromWatchlist(symbol: string) {
+    const userId = this.authService.currentUser()?.['$id'];
+    if (!userId) return;
+    try {
+      const favoriteItem = this.userData()?.items.find((item) => item.coinId === symbol);
+
+      if (favoriteItem) {
+        await this.userDataService.deleteFavoriteCoin(favoriteItem.$id);
+        const updatedFavorites = this.userFavorites().filter((item) => item.coinId !== symbol);
+        this.userFavorites.set(updatedFavorites);
+
+        this.userData.set({
+          total: updatedFavorites.length,
+          items: updatedFavorites,
+        });
+        this.watchlist.set(this.watchlist().filter((coin) => coin.symbol !== symbol));
+      }
+    } catch (error) {
+      console.error('Error managing watchlist:', error);
+    }
   }
 }

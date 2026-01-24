@@ -15,6 +15,7 @@
         [atl]="element.atl"
         [id]="element.id"
         [currentPrice]="element.current_price"
+        (watchlistId)="removeFromWatchlist($event)"
       />
     }
   } @else if (loadingWatchlist()) {
