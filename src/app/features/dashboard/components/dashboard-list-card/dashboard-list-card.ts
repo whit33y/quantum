@@ -1,10 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { Star, X, LucideAngularModule } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-list-card',
-  imports: [LucideAngularModule, RouterLink],
+  imports: [LucideAngularModule, RouterLink, CurrencyPipe],
   templateUrl: './dashboard-list-card.html',
   styleUrl: './dashboard-list-card.css',
 })
