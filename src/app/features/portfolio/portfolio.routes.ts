@@ -8,6 +8,14 @@ export const PORTFOLIO_ROUTES: Routes = [
     title: 'portfolio',
   },
   {
+    path: 'wallet/create',
+    loadComponent: () =>
+      import('./pages/portfolio-page/create-portfolio-page/create-portfolio-page').then(
+        (p) => p.CreatePortfolioPage,
+      ),
+    title: 'Add new coin',
+  },
+  {
     path: 'watchlist',
     loadComponent: () =>
       import('./pages/watch-list-page/watch-list-page').then((p) => p.WatchListPage),
