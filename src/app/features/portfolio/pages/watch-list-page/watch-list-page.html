@@ -2,7 +2,10 @@
   @if (errorMarkets()) {
     <p class="text-white text-xl">Unfortunately something went wrong, please try again!</p>
   } @else if (watchlist() && watchlist().length > 0) {
-    <app-watch-list-info />
+    <app-watch-list-info
+      [watchListCount]="watchlist().length"
+      [lastAddedCoin]="watchlist()[watchlist().length - 1].name"
+    />
     @for (element of watchlist(); track element.name) {
       <app-watch-list-card />
     }
