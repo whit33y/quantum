@@ -1,6 +1,14 @@
-import { Component, ElementRef, HostListener, inject, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  signal,
+  WritableSignal,
+  OnInit,
+} from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
-import { LucideAngularModule, User, Search, Settings, LogOut } from 'lucide-angular';
+import { LucideAngularModule, User, Search, Settings, LogOut, Wallet, Star } from 'lucide-angular';
 import { SearchService } from '../../../../core/services/search-service';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
@@ -10,11 +18,11 @@ import { CoinApiService } from '../../../../features/dashboard/services/coin-api
 
 @Component({
   selector: 'app-nav',
-  imports: [LucideAngularModule, FormField, RouterLink, NavTickerScroll],
+  imports: [LucideAngularModule, FormField, RouterLink, NavTickerScroll, RouterLink],
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })
-export class Nav {
+export class Nav implements OnInit {
   private elementRef = inject(ElementRef);
   private searchService = inject(SearchService);
   private authService = inject(AuthService);
@@ -22,6 +30,8 @@ export class Nav {
   private debounceTimer?: number;
 
   readonly User = User;
+  readonly Star = Star;
+  readonly Wallet = Wallet;
   readonly Search = Search;
   readonly Settings = Settings;
   readonly LogOut = LogOut;
@@ -67,6 +77,7 @@ export class Nav {
     }));
   }
 
+  apiContected = signal<boolean>(true);
   errorMarkets = signal<string>('');
   getMarkets(
     currency: string,
@@ -78,8 +89,10 @@ export class Nav {
     this.coinApiService.getMarkets(currency, limit, page, symbols).subscribe({
       next: (response) => {
         targetSignal.set(response);
+        this.apiContected.set(true);
       },
       error: (err) => {
+        this.apiContected.set(false);
         this.errorMarkets.set('Something went wrong while loading coin markets.');
         console.error(err);
       },
