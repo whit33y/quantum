@@ -4,10 +4,11 @@ import { AuthService } from '../../../../core/services/auth-service';
 import { CoinApiService } from '../../../dashboard/services/coin-api-service';
 import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 import { UserWalletResponse } from '../../../../shared/models/user-data.model';
+import { PortfolioInfo } from '../../components/portfolio-info/portfolio-info';
 
 @Component({
   selector: 'app-portfolio-page',
-  imports: [],
+  imports: [PortfolioInfo],
   templateUrl: './portfolio-page.html',
   styleUrl: './portfolio-page.css',
 })
@@ -63,5 +64,37 @@ export class PortfolioPage implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  get totalNetWorth() {
+    let totalNetWorth = 0;
+    const walletData = this.walletData();
+    if (walletData && this.walletElements()) {
+      for (const element of this.walletElements()) {
+        for (const coin of walletData.items) {
+          if (element.symbol === coin.coinId) {
+            totalNetWorth += element.current_price * coin.walletBalance;
+          }
+        }
+      }
+    }
+    return totalNetWorth;
+  }
+
+  get changeInWallet() {
+    let currentPrice = 0;
+    let price24h = 0;
+    const walletData = this.walletData();
+    if (walletData && this.walletElements()) {
+      for (const element of this.walletElements()) {
+        for (const coin of walletData.items) {
+          if (element.symbol === coin.coinId) {
+            currentPrice += element.current_price * coin.walletBalance;
+            price24h += element.high_24h * coin.walletBalance;
+          }
+        }
+      }
+    }
+    return currentPrice - price24h;
   }
 }

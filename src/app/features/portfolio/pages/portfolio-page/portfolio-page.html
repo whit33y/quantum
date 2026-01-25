@@ -4,6 +4,11 @@
   } @else if (loadingMarkets()) {
     <p>Loading...</p>
   } @else if (walletElements() && walletData() && walletElements().length > 0) {
+    <app-portfolio-info
+      [itemsCount]="walletElements().length"
+      [totalNetWorth]="totalNetWorth"
+      [change24h]="changeInWallet"
+    />
     @for (element of walletElements(); track element.name) {
       @for (coin of walletData()?.items; track coin.coinId) {
         @if (element.symbol === coin.coinId) {
