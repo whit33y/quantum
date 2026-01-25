@@ -3,7 +3,7 @@ import {
   UserFavoriteDocument,
   UserFavoriteResponse,
   UserWalletDocument,
-  userWalletResponse,
+  UserWalletResponse,
 } from '../../../shared/models/user-data.model';
 import { tablesDb } from '../../../lib/appwrite';
 import { environment } from '../../../../environments/environment';
@@ -58,7 +58,7 @@ export class UserDataService {
     return response;
   }
 
-  async getUserWallet(userId: string): Promise<userWalletResponse> {
+  async getUserWallet(userId: string): Promise<UserWalletResponse> {
     const response = await tablesDb.listRows<UserWalletDocument>({
       databaseId: environment.appwriteDatabaseId,
       tableId: environment.appwriteUserWallet,

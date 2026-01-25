@@ -1,1 +1,15 @@
-<p>portfolio-page works!</p>
+<div class="mx-40 my-4 p-2">
+  @if (errorMarkets()) {
+    <p>{{ errorMarkets() }}</p>
+  } @else if (loadingMarkets()) {
+    <p>Loading...</p>
+  } @else if (walletElements() && walletData() && walletElements().length > 0) {
+    @for (element of walletElements(); track element.name) {
+      @for (coin of walletData()?.items; track coin.coinId) {
+        @if (element.symbol === coin.coinId) {
+          <p>{{ element.name }} - {{ coin.walletBalance * element.current_price }}</p>
+        }
+      }
+    }
+  }
+</div>
