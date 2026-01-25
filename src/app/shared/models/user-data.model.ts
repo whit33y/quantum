@@ -39,7 +39,7 @@ export interface UserWallet {
   walletBalance: number;
 }
 
-export interface userWalletResponse {
+export interface UserWalletResponse {
   items: UserWallet[];
   total: number;
 }
