@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { PortfolioAddForm } from '../../../components/portfolio-add-form/portfolio-add-form';
 import { AuthService } from '../../../../../core/services/auth-service';
 import { CoinApiService } from '../../../../dashboard/services/coin-api-service';
@@ -6,6 +6,7 @@ import { UserDataService } from '../../../../dashboard/services/user-data-servic
 import { form, FormField, required } from '@angular/forms/signals';
 import { SearchService } from '../../../../../core/services/search-service';
 import { PortfolioSearchCoin } from '../../../components/portfolio-search-coin/portfolio-search-coin';
+import { CoinsSearch } from '../../../../../shared/models/coin-api.model';
 
 @Component({
   selector: 'app-create-portfolio-page',
@@ -35,6 +36,24 @@ export class CreatePortfolioPage {
       const value = $event;
       this.searchService.setSearchTermCreate(value);
       console.log(this.searchService.searchTermCreate());
+      if (this.searchService.searchTermCreate().length > 0) {
+        this.searchCoins(this.searchService.searchTermCreate(), this.findedCoins);
+      } else {
+        this.findedCoins.set([]);
+      }
     }, 300);
+  }
+
+  findedCoins = signal<CoinsSearch[]>([]);
+  searchCoins(search: string, targetSignal: WritableSignal<CoinsSearch[]>) {
+    this.coinApiService.getCoinsSearch(search).subscribe({
+      next: (response) => {
+        targetSignal.set(response.coins);
+        console.log(response);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 }

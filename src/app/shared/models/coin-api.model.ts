@@ -155,3 +155,17 @@ export interface MarketChart {
   market_caps: [number, number][];
   total_volumes: [number, number][];
 }
+
+export interface CoinsResponse {
+  coins: CoinsSearch[];
+}
+
+export interface CoinsSearch {
+  id: string;
+  name: string;
+  api_symbol: string;
+  symbol: string;
+  market_cap_rank?: number;
+  thumb: string;
+  large: string;
+}
