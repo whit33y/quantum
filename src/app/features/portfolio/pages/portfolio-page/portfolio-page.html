@@ -1,8 +1,12 @@
 <div class="mx-40 my-4 p-2">
   @if (errorMarkets()) {
-    <p>{{ errorMarkets() }}</p>
+    <p class="text-white text-xl">Unfortunately something went wrong, please try again!</p>
   } @else if (loadingMarkets()) {
-    <p>Loading...</p>
+    <div
+      class="text-white text-2xl font-bold text-center bg-zinc-800 border border-white/5 rounded-2xl p-4"
+    >
+      <p>Loading...</p>
+    </div>
   } @else if (walletElements() && walletData() && walletElements().length > 0) {
     <app-portfolio-info
       [itemsCount]="walletElements().length"
@@ -21,9 +25,20 @@
             [img]="element.image"
             [name]="element.name"
             [symbol]="element.symbol"
+            (portfolioId)="removeFromPortfolio($event)"
           />
         }
       }
     }
+  } @else if (!walletElements() && !walletData() && walletElements().length === 0) {
+    <div
+      class="text-white text-2xl font-bold text-center bg-zinc-800 border border-white/5 rounded-2xl p-4"
+    >
+      <p>Nothing to see here!</p>
+      <p>Add coins to portfolio 🚀</p>
+      <div class="mt-4">
+        <a class="underline" [routerLink]="['/dashboard']">Go back to dashboard</a>
+      </div>
+    </div>
   }
 </div>

@@ -6,10 +6,11 @@ import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 import { UserWalletResponse } from '../../../../shared/models/user-data.model';
 import { PortfolioInfo } from '../../components/portfolio-info/portfolio-info';
 import { PortfolioCard } from '../../components/portfolio-card/portfolio-card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-portfolio-page',
-  imports: [PortfolioInfo, PortfolioCard],
+  imports: [PortfolioInfo, PortfolioCard, RouterLink],
   templateUrl: './portfolio-page.html',
   styleUrl: './portfolio-page.css',
 })
@@ -97,5 +98,25 @@ export class PortfolioPage implements OnInit {
       }
     }
     return currentPrice - price24h;
+  }
+
+  async removeFromPortfolio(id: string) {
+    console.log(id);
+    const userId = this.authService.currentUser()?.['$id'];
+    if (!userId) return;
+    try {
+      await this.userDataService.deleteWalletCoin(id);
+      const currentWallet = this.walletData();
+      if (currentWallet) {
+        this.walletData.set({
+          ...currentWallet,
+          items: currentWallet.items.filter((item) => item.coinId !== id),
+          total: currentWallet.total - 1,
+        });
+      }
+      this.walletElements.set(this.walletElements().filter((element) => element.symbol !== id));
+    } catch (error) {
+      console.error('Error while deleting', error);
+    }
   }
 }
