@@ -1,0 +1,14 @@
+<div
+  class="hidden md:flex items-center bg-zinc-950 border border-white/10 rounded-full px-4 py-1.5 w-80 focus-within:border-indigo-500/50 transition-all"
+>
+  <i-lucide [img]="Search" class="w-4 h-4 text-zinc-500"></i-lucide>
+  <input
+    type="text"
+    placeholder="Search coin"
+    [class]="inputClass()"
+    [value]="value()"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+    class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-zinc-300"
+  />
+</div>

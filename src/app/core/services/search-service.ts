@@ -9,4 +9,10 @@ export class SearchService {
   setSearchTerm(searchTerm: string) {
     this.searchTerm.set(searchTerm);
   }
+
+  readonly searchTermCreate = signal<string>('');
+
+  setSearchTermCreate(searchTerm: string) {
+    this.searchTermCreate.set(searchTerm);
+  }
 }

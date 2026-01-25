@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PortfolioInfo } from './portfolio-info';
+import { PortfolioSearchCoin } from './portfolio-search-coin';
 
-describe('PortfolioInfo', () => {
-  let component: PortfolioInfo;
-  let fixture: ComponentFixture<PortfolioInfo>;
+describe('PortfolioSearchCoin', () => {
+  let component: PortfolioSearchCoin;
+  let fixture: ComponentFixture<PortfolioSearchCoin>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PortfolioInfo],
+      imports: [PortfolioSearchCoin],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PortfolioInfo);
+    fixture = TestBed.createComponent(PortfolioSearchCoin);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
