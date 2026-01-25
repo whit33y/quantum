@@ -1,16 +1,17 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { PortfolioAddForm } from '../../../components/portfolio-add-form/portfolio-add-form';
 import { AuthService } from '../../../../../core/services/auth-service';
 import { CoinApiService } from '../../../../dashboard/services/coin-api-service';
 import { UserDataService } from '../../../../dashboard/services/user-data-service';
-import { form, FormField, required } from '@angular/forms/signals';
+import { form, FormField, min, minLength, required } from '@angular/forms/signals';
 import { SearchService } from '../../../../../core/services/search-service';
 import { PortfolioSearchCoin } from '../../../components/portfolio-search-coin/portfolio-search-coin';
 import { CoinsSearch } from '../../../../../shared/models/coin-api.model';
+import { PortfolioFindedItems } from '../../../components/portfolio-finded-items/portfolio-finded-items';
+import { Button } from '../../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-create-portfolio-page',
-  imports: [PortfolioAddForm, PortfolioSearchCoin, FormField],
+  imports: [PortfolioSearchCoin, FormField, PortfolioFindedItems, Button],
   templateUrl: './create-portfolio-page.html',
   styleUrl: './create-portfolio-page.css',
 })
@@ -28,6 +29,8 @@ export class CreatePortfolioPage {
   coinForm = form(this.coinModel, (coinFormSchema) => {
     required(coinFormSchema.amount, { message: 'You have to pass amount' });
     required(coinFormSchema.symbol, { message: 'You have to select coin' });
+    minLength(coinFormSchema.symbol, 1, { message: 'You must select coin' });
+    min(coinFormSchema.amount, 0.0000000000000001, { message: 'Value must be greater than 0' });
   });
 
   changeSearch($event: string) {
@@ -55,5 +58,14 @@ export class CreatePortfolioPage {
         console.error(error);
       },
     });
+  }
+
+  selectCoin($event: CoinsSearch) {
+    this.coinModel.set({ symbol: $event.symbol, amount: this.coinModel().amount });
+    console.log(this.coinModel());
+  }
+
+  addCoin() {
+    console.log(this.coinModel());
   }
 }
