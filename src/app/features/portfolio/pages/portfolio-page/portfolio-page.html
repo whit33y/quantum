@@ -30,13 +30,20 @@
         }
       }
     }
-  } @else if (!walletElements() && !walletData() && walletElements().length === 0) {
+  } @else if (walletElements().length === 0 && walletData()?.items?.length === 0) {
     <div
-      class="text-white text-2xl font-bold text-center bg-zinc-800 border border-white/5 rounded-2xl p-4"
+      class="text-white font-bold text-center flex flex-col items-center justify-center bg-zinc-800 border border-white/5 rounded-2xl p-4"
     >
-      <p>Nothing to see here!</p>
-      <p>Add coins to portfolio 🚀</p>
-      <div class="mt-4">
+      <p class="text-3xl tracking-wide">Nothing to see here!</p>
+      <div class="w-60 text-base uppercase my-2">
+        <app-button
+          class="underline"
+          [routerLink]="['/portfolio/wallet/create']"
+          text="Add coins to portfolio 💼"
+        />
+      </div>
+      <p class="my-2">or</p>
+      <div>
         <a class="underline" [routerLink]="['/dashboard']">Go back to dashboard</a>
       </div>
     </div>

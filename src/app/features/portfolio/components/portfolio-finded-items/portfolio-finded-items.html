@@ -1,0 +1,36 @@
+<div
+  class="absolute top-full left-0 right-0 mt-2 bg-zinc-900 border border-white/10 rounded-xl shadow-xl z-50 overflow-hidden max-h-64"
+>
+  <div class="overflow-y-auto max-h-56">
+    @for (coin of findedCoins(); track coin.id) {
+      <button
+        (click)="onSelectCoin(coin)"
+        class="flex w-full items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-200 hover:bg-white/5"
+        [class.bg-indigo-500/10]="selectedCoin()?.id === coin.id"
+        [class.border-l-2]="selectedCoin()?.id === coin.id"
+        [class.border-indigo-500]="selectedCoin()?.id === coin.id"
+      >
+        <img [src]="coin.thumb" [alt]="coin.name" class="w-8 h-8 rounded-full bg-zinc-800" />
+
+        <div class="flex flex-col flex-1 min-w-0">
+          <span class="text-sm font-medium text-white truncate">
+            {{ coin.name }}
+          </span>
+          <span class="text-xs text-zinc-500 uppercase">
+            {{ coin.symbol }}
+          </span>
+        </div>
+
+        @if (coin.market_cap_rank) {
+          <div class="flex items-center justify-center px-2 py-1 bg-zinc-800 rounded-lg">
+            <span class="text-xs text-zinc-400">#{{ coin.market_cap_rank }}</span>
+          </div>
+        }
+
+        @if (selectedCoin()?.id === coin.id) {
+          <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+        }
+      </button>
+    }
+  </div>
+</div>

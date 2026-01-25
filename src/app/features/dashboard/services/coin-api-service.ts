@@ -2,7 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { CoinDetails, CryptoMarket, MarketChart } from '../../../shared/models/coin-api.model';
+import {
+  CoinDetails,
+  CoinsResponse,
+  CryptoMarket,
+  MarketChart,
+} from '../../../shared/models/coin-api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +63,15 @@ export class CoinApiService {
       params: {
         vs_currency: currency,
         days,
+      },
+    });
+  }
+
+  getCoinsSearch(search: string): Observable<CoinsResponse> {
+    return this.http.get<CoinsResponse>(`${this.BASE_URL}/search`, {
+      headers: this.headers,
+      params: {
+        query: search,
       },
     });
   }

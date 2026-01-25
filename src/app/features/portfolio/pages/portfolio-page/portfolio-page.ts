@@ -7,10 +7,11 @@ import { UserWalletResponse } from '../../../../shared/models/user-data.model';
 import { PortfolioInfo } from '../../components/portfolio-info/portfolio-info';
 import { PortfolioCard } from '../../components/portfolio-card/portfolio-card';
 import { RouterLink } from '@angular/router';
+import { Button } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-portfolio-page',
-  imports: [PortfolioInfo, PortfolioCard, RouterLink],
+  imports: [PortfolioInfo, PortfolioCard, RouterLink, Button],
   templateUrl: './portfolio-page.html',
   styleUrl: './portfolio-page.css',
 })
