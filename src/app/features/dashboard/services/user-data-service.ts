@@ -61,7 +61,7 @@ export class UserDataService {
   async deleteWalletCoin(id: string) {
     const response = await tablesDb.deleteRow({
       databaseId: environment.appwriteDatabaseId,
-      tableId: environment.appwriteUserFavorite,
+      tableId: environment.appwriteUserWallet,
       rowId: id,
     });
     return response;
