@@ -12,7 +12,16 @@
     @for (element of walletElements(); track element.name) {
       @for (coin of walletData()?.items; track coin.coinId) {
         @if (element.symbol === coin.coinId) {
-          <p>{{ element.name }} - {{ coin.walletBalance * element.current_price }}</p>
+          <app-portfolio-card
+            [walletAmmount]="coin.walletBalance"
+            [totalBalance]="coin.walletBalance * element.current_price"
+            [currentPrice]="element.current_price"
+            [id]="coin.$id"
+            [changePercentage24h]="element.price_change_percentage_24h"
+            [img]="element.image"
+            [name]="element.name"
+            [symbol]="element.symbol"
+          />
         }
       }
     }

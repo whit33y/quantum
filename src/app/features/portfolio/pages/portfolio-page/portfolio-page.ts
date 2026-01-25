@@ -5,10 +5,11 @@ import { CoinApiService } from '../../../dashboard/services/coin-api-service';
 import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 import { UserWalletResponse } from '../../../../shared/models/user-data.model';
 import { PortfolioInfo } from '../../components/portfolio-info/portfolio-info';
+import { PortfolioCard } from '../../components/portfolio-card/portfolio-card';
 
 @Component({
   selector: 'app-portfolio-page',
-  imports: [PortfolioInfo],
+  imports: [PortfolioInfo, PortfolioCard],
   templateUrl: './portfolio-page.html',
   styleUrl: './portfolio-page.css',
 })

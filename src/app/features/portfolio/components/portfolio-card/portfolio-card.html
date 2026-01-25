@@ -1,1 +1,62 @@
-<p>portfolio-card works!</p>
+<div
+  [routerLink]="['/dashboard/asset-details', id()]"
+  class="bg-zinc-800 border border-white/5 rounded-2xl p-4 relative overflow-hidden h-full flex justify-between my-2"
+>
+  <div class="flex items-center w-3/10">
+    <img [src]="img()" class="w-10 h-10" [alt]="`Logo of ${name()}`" />
+    <div>
+      <h3 class="text-white text-xl font-semibold mx-2">{{ name() }}</h3>
+      <p class="text-xs text-zinc-400 mx-2 uppercase">{{ symbol() }}</p>
+    </div>
+  </div>
+
+  <div class="flex items-center w-6/10 px-2">
+    <div class="flex flex-col w-full gap-1.5 border-l border-white/5 pl-4">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+          Current Price
+        </span>
+        <span class="text-sm font-semibold text-blue-400 tabular-nums">
+          {{ currentPrice() | currency: 'USD' : 'symbol' : '1.2-2' }}
+        </span>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+          24h Price Change
+        </span>
+        <span class="text-sm font-semibold text-blue-400 tabular-nums" [class]="infoColor">
+          {{ changePercentage24h() }}%
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full gap-1.5 border-l border-white/5 pl-4">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+          Amount Held
+        </span>
+        <span class="text-sm font-semibold text-blue-400 tabular-nums">
+          {{ walletAmmount() }}
+        </span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+          Wallet Value
+        </span>
+        <span class="text-sm font-semibold text-emerald-400 tabular-nums">
+          {{ totalBalance() | currency: 'USD' : 'symbol' : '1.2-2' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-center items-end w-1/10">
+    <button
+      (click)="emitPortfolioId(symbol()); $event.stopPropagation()"
+      class="flex items-center justify-center rounded-full h-10 w-10 bg-linear-to-r from-indigo-500 to-purple-500 cursor-pointer"
+    >
+      <i-lucide [img]="XIcon" class="text-white w-6 h-6"></i-lucide>
+    </button>
+  </div>
+</div>
