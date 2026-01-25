@@ -27,6 +27,7 @@
         (buttonClick)="addCoin(); $event.preventDefault()"
         [variant]="coinForm().invalid() ? 'disabled' : 'primary'"
       />
+      <p class="text-xs text-rose-400">{{ existError() }}</p>
     </form>
     <app-portfolio-search-coin
       [formField]="searchForm.search"

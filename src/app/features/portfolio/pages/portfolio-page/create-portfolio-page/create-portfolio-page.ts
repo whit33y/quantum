@@ -1,4 +1,4 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { AuthService } from '../../../../../core/services/auth-service';
 import { CoinApiService } from '../../../../dashboard/services/coin-api-service';
 import { UserDataService } from '../../../../dashboard/services/user-data-service';
@@ -8,6 +8,8 @@ import { PortfolioSearchCoin } from '../../../components/portfolio-search-coin/p
 import { CoinsSearch } from '../../../../../shared/models/coin-api.model';
 import { PortfolioFindedItems } from '../../../components/portfolio-finded-items/portfolio-finded-items';
 import { Button } from '../../../../../shared/components/button/button';
+import { UserWallet } from '../../../../../shared/models/user-data.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-portfolio-page',
@@ -15,12 +17,17 @@ import { Button } from '../../../../../shared/components/button/button';
   templateUrl: './create-portfolio-page.html',
   styleUrl: './create-portfolio-page.css',
 })
-export class CreatePortfolioPage {
+export class CreatePortfolioPage implements OnInit {
   private authService = inject(AuthService);
   private coinApiService = inject(CoinApiService);
   private userDataService = inject(UserDataService);
   private searchService = inject(SearchService);
+  private router = inject(Router);
   private debounceTimer?: number;
+
+  ngOnInit(): void {
+    this.loadWallet();
+  }
 
   searchModel = signal({ search: '' });
   searchForm = form(this.searchModel);
@@ -65,7 +72,39 @@ export class CreatePortfolioPage {
     console.log(this.coinModel());
   }
 
-  addCoin() {
-    console.log(this.coinModel());
+  existError = signal<string>('');
+  async addCoin() {
+    const userId = this.authService.currentUser()?.['$id'];
+    if (!userId) return;
+    try {
+      const symbol = this.coinModel().symbol.toLowerCase();
+      console.log(symbol, this.walletItems());
+      const alreadyExists = this.walletItems()?.some((item) => item.coinId === symbol);
+      if (alreadyExists) {
+        this.existError.set('This coin already exist in your wallet.');
+        setTimeout(() => {
+          this.existError.set('');
+        }, 5000);
+        throw new Error(`Already exists`);
+      }
+      await this.userDataService.addCoinToWallet(userId, this.coinModel().amount, symbol);
+      this.router.navigate(['/portfolio/wallet']);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  walletItems = signal<UserWallet[] | undefined>(undefined);
+  async loadWallet() {
+    const userId = this.authService.currentUser()?.['$id'];
+    if (!userId) return;
+    try {
+      const portfolioCoins = await this.userDataService.getUserWallet(userId);
+      if (portfolioCoins) {
+        this.walletItems.set(portfolioCoins.items);
+      }
+    } catch (error) {
+      console.error('Failed to load wallet, ', error);
+    }
   }
 }
