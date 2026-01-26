@@ -8,12 +8,12 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { CoinApiService } from '../../services/coin-api-service';
 import { CoinDetails, MarketChart } from '../../../../shared/models/coin-api.model';
 import { AssetDetailsCard } from '../../components/asset-details-card/asset-details-card';
-import { UserDataService } from '../../services/user-data-service';
 import { AuthService } from '../../../../core/services/auth-service';
 import { UserFavorite, UserFavoriteResponse } from '../../../../shared/models/user-data.model';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../core/services/user-data-service';
 
 @Component({
   selector: 'app-asset-details-page',

@@ -1,7 +1,5 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { AuthService } from '../../../../../core/services/auth-service';
-import { CoinApiService } from '../../../../dashboard/services/coin-api-service';
-import { UserDataService } from '../../../../dashboard/services/user-data-service';
 import { form, FormField, min, minLength, required } from '@angular/forms/signals';
 import { SearchService } from '../../../../../core/services/search-service';
 import { PortfolioSearchCoin } from '../../../components/portfolio-search-coin/portfolio-search-coin';
@@ -10,6 +8,8 @@ import { PortfolioFindedItems } from '../../../components/portfolio-finded-items
 import { Button } from '../../../../../shared/components/button/button';
 import { UserWallet } from '../../../../../shared/models/user-data.model';
 import { Router } from '@angular/router';
+import { CoinApiService } from '../../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../../core/services/user-data-service';
 
 @Component({
   selector: 'app-create-portfolio-page',

@@ -1,12 +1,12 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { UserDataService } from '../../../dashboard/services/user-data-service';
 import { AuthService } from '../../../../core/services/auth-service';
-import { CoinApiService } from '../../../dashboard/services/coin-api-service';
 import { UserFavorite, UserFavoriteResponse } from '../../../../shared/models/user-data.model';
 import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 import { WatchListCard } from '../../components/watch-list-card/watch-list-card';
 import { WatchListInfo } from '../../components/watch-list-info/watch-list-info';
 import { RouterLink } from '@angular/router';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../core/services/user-data-service';
 
 @Component({
   selector: 'app-watch-list-page',

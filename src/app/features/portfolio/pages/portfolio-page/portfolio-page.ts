@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { UserDataService } from '../../../dashboard/services/user-data-service';
 import { AuthService } from '../../../../core/services/auth-service';
-import { CoinApiService } from '../../../dashboard/services/coin-api-service';
 import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 import { UserWalletResponse } from '../../../../shared/models/user-data.model';
 import { PortfolioInfo } from '../../components/portfolio-info/portfolio-info';
 import { PortfolioCard } from '../../components/portfolio-card/portfolio-card';
 import { RouterLink } from '@angular/router';
 import { Button } from '../../../../shared/components/button/button';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../core/services/user-data-service';
 
 @Component({
   selector: 'app-portfolio-page',

@@ -14,7 +14,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 import { NavTickerScroll } from './nav-ticker-scroll/nav-ticker-scroll';
 import { CoinsSearch, CryptoMarket } from '../../../models/coin-api.model';
-import { CoinApiService } from '../../../../features/dashboard/services/coin-api-service';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
 
 @Component({
   selector: 'app-nav',

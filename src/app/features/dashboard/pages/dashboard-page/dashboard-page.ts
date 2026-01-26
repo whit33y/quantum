@@ -1,8 +1,6 @@
 import { Component, inject, OnInit, computed, signal, WritableSignal, effect } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth-service';
 import { CoinDetails, CryptoMarket, MarketChart } from '../../../../shared/models/coin-api.model';
-import { CoinApiService } from '../../services/coin-api-service';
-import { UserDataService } from '../../services/user-data-service';
 import { UserFavoriteResponse } from '../../../../shared/models/user-data.model';
 import { InfoCard } from '../../../../shared/components/info-card/info-card';
 import { TrendingDown, TrendingUp, TrendingUpDown, WalletIcon } from 'lucide-angular';
@@ -11,6 +9,8 @@ import { ListCard } from '../../../../shared/components/list-card/list-card';
 import { BasicBarChart } from '../../../../shared/components/basic-bar-chart/basic-bar-chart';
 import { BasicLineChart } from '../../../../shared/components/basic-line-chart/basic-line-chart';
 import { DashboardListCard } from '../../components/dashboard-list-card/dashboard-list-card';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../core/services/user-data-service';
 
 @Component({
   selector: 'app-dashboard-page',
