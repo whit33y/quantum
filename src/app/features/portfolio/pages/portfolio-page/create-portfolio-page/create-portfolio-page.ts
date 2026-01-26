@@ -10,6 +10,11 @@ import { UserWallet } from '../../../../../shared/models/user-data.model';
 import { Router } from '@angular/router';
 import { CoinApiService } from '../../../../../core/services/coin-api-service';
 import { UserDataService } from '../../../../../core/services/user-data-service';
+import {
+  AddCoinData,
+  AddCoinFormSchema,
+  AddCoinInitialData,
+} from '../../../models/coin-form.model';
 
 @Component({
   selector: 'app-create-portfolio-page',
@@ -32,13 +37,8 @@ export class CreatePortfolioPage implements OnInit {
   searchModel = signal({ search: '' });
   searchForm = form(this.searchModel);
 
-  coinModel = signal({ symbol: '', amount: 0 });
-  coinForm = form(this.coinModel, (coinFormSchema) => {
-    required(coinFormSchema.amount, { message: 'You have to pass amount' });
-    required(coinFormSchema.symbol, { message: 'You have to select coin' });
-    minLength(coinFormSchema.symbol, 1, { message: 'You must select coin' });
-    min(coinFormSchema.amount, 0.0000000000000001, { message: 'Value must be greater than 0' });
-  });
+  coinModel = signal<AddCoinData>(AddCoinInitialData);
+  coinForm = form(this.coinModel, AddCoinFormSchema);
 
   changeSearch($event: string) {
     clearTimeout(this.debounceTimer);
