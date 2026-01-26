@@ -1,4 +1,4 @@
-import { min, minLength, required, schema, validate } from '@angular/forms/signals';
+import { min, minLength, required, schema } from '@angular/forms/signals';
 
 export interface AddCoinData {
   symbol: string;

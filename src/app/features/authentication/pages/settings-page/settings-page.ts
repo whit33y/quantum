@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ChangePasswordData } from '../../models/change-password-form.model';
 import { AuthService } from '../../../../core/services/auth-service';
 import { ChangePasswordForm } from '../../components/change-password-form/change-password-form';

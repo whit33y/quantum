@@ -12,7 +12,8 @@ export class LandingFeatures {
     {
       icon: Zap,
       title: 'Lightning Speed',
-      description: 'Experience our optimized architecture using Coingecko API and modern Angular featues.',
+      description:
+        'Experience our optimized architecture using Coingecko API and modern Angular featues.',
     },
     {
       icon: Shield,
