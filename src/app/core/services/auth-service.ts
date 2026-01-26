@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { account, ID } from '../../lib/appwrite';
+import { account, ID } from '../lib/appwrite';
 import { Models } from 'appwrite';
 import { VERIFY_URL } from '../tokens/verify-url.token';
 import { Router } from '@angular/router';
