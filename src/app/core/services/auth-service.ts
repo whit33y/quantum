@@ -116,4 +116,18 @@ export class AuthService {
   resetError() {
     this.authError.set('');
   }
+
+  async changePassword(oldPassword: string, newPassword: string) {
+    try {
+      await account.updatePassword({ password: newPassword, oldPassword: oldPassword });
+      await this.logout();
+      this.resetError();
+    } catch (err: unknown) {
+      const error = err as AppwriteError;
+      if (error.message) {
+        this.authError.set(error.message);
+      }
+      throw error;
+    }
+  }
 }
