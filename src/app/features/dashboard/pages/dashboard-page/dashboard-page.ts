@@ -2,10 +2,10 @@ import { Component, inject, OnInit, computed, signal, WritableSignal, effect } f
 import { AuthService } from '../../../../core/services/auth-service';
 import { CoinDetails, CryptoMarket, MarketChart } from '../../../../shared/models/coin-api.model';
 import { UserFavoriteResponse } from '../../../../shared/models/user-data.model';
-import { InfoCard } from '../../../../shared/components/info-card/info-card';
+import { InfoCard } from '../../components/info-card/info-card';
 import { TrendingDown, TrendingUp, TrendingUpDown, WalletIcon } from 'lucide-angular';
-import { AssetCard } from '../../../../shared/components/asset-card/asset-card';
-import { ListCard } from '../../../../shared/components/list-card/list-card';
+import { AssetCard } from '../../components/asset-card/asset-card';
+import { ListCard } from '../../components/list-card/list-card';
 import { BasicBarChart } from '../../../../shared/components/basic-bar-chart/basic-bar-chart';
 import { BasicLineChart } from '../../../../shared/components/basic-line-chart/basic-line-chart';
 import { DashboardListCard } from '../../components/dashboard-list-card/dashboard-list-card';
