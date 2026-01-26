@@ -13,6 +13,7 @@ import { NavTickerScroll } from '../../../../shared/components/layout/nav/nav-ti
 })
 export class AuthPage {
   private authService = inject(AuthService);
+  tickerElements = tickerElements;
 
   error = computed(() => this.authService.authError());
 
@@ -33,3 +34,16 @@ export class AuthPage {
     this.authService.register(registerForm.email, registerForm.password, registerForm.name);
   }
 }
+
+export const tickerElements = [
+  { shortName: 'bitcoin', price: 89401, percent: -0.49108 },
+  { shortName: 'ethereum', price: 2941.48, percent: -2.17901 },
+  { shortName: 'tether', price: 0.998746, percent: -0.02964 },
+  { shortName: 'binancecoin', price: 889.87, percent: 0.20842 },
+  { shortName: 'ripple', price: 1.91, percent: -1.96294 },
+  { shortName: 'usd-coin', price: 0.999617, percent: -1.10792 },
+  { shortName: 'solana', price: 127.79, percent: -1.71445 },
+  { shortName: 'tron', price: 0.309087, percent: 3.2992 },
+  { shortName: 'staked-ether', price: 2940.42, percent: -0.88857 },
+  { shortName: 'dogecoin', price: 0.124926, percent: -1.07538 },
+];
