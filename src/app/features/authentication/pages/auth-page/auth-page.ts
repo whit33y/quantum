@@ -4,6 +4,7 @@ import { RegisterForm } from '../../components/register-form/register-form';
 import { LoginData, RegisterData } from '../../models/auth-form.model';
 import { AuthService } from '../../../../core/services/auth-service';
 import { NavTickerScroll } from '../../../../shared/components/layout/nav/nav-ticker-scroll/nav-ticker-scroll';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-auth-page',
@@ -13,6 +14,7 @@ import { NavTickerScroll } from '../../../../shared/components/layout/nav/nav-ti
 })
 export class AuthPage {
   private authService = inject(AuthService);
+  private title = inject(Title);
   tickerElements = tickerElements;
 
   error = computed(() => this.authService.authError());
@@ -21,6 +23,11 @@ export class AuthPage {
 
   toggleForm() {
     this.isLoginForm.update((value) => !value);
+    if (this.isLoginForm()) {
+      this.title.setTitle('Login');
+    } else {
+      this.title.setTitle('Register');
+    }
     this.authService.resetError();
   }
 

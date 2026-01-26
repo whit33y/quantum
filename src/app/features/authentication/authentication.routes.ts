@@ -9,6 +9,7 @@ export const AUTH_ROUTES: Routes = [
     path: 'login',
     canActivate: [noAuthGuard],
     loadComponent: () => import('./pages/auth-page/auth-page').then((p) => p.AuthPage),
+    title: 'Login',
   },
   {
     path: 'verify',

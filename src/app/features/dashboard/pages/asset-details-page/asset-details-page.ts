@@ -14,6 +14,7 @@ import { AuthService } from '../../../../core/services/auth-service';
 import { UserFavorite, UserFavoriteResponse } from '../../../../shared/models/user-data.model';
 import { CoinApiService } from '../../../../core/services/coin-api-service';
 import { UserDataService } from '../../../../core/services/user-data-service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-asset-details-page',
@@ -25,6 +26,8 @@ export class AssetDetailsPage implements OnInit {
   private coinApiService = inject(CoinApiService);
   private userDataService = inject(UserDataService);
   private authService = inject(AuthService);
+  private title = inject(Title);
+
   coinId = input<string>();
   favs = signal<string[]>([]);
   favsFull = signal<UserFavorite[]>([]);
@@ -84,6 +87,7 @@ export class AssetDetailsPage implements OnInit {
         next: (response) => {
           if (targetSignal) {
             targetSignal.set(response);
+            this.title.setTitle(`${this.coinDetails()?.name} details`);
           }
         },
         error: (err) => {
