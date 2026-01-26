@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 import { NavTickerScroll } from '../../../../shared/components/layout/nav/nav-ticker-scroll/nav-ticker-scroll';
 import { Button } from '../../../../shared/components/button/button';
+import { tickerElements } from '../auth-page/auth-page';
 
 @Component({
   selector: 'app-verify-page',
@@ -13,6 +14,7 @@ import { Button } from '../../../../shared/components/button/button';
 export class VerifyPage implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private authService = inject(AuthService);
+  tickerElements = tickerElements;
 
   userId = signal('');
   secret = signal('');

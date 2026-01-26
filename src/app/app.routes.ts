@@ -13,7 +13,6 @@ export const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('./features/authentication/authentication.routes').then((r) => r.AUTH_ROUTES),
-    title: 'Sign up or log in',
   },
   {
     path: 'portfolio',

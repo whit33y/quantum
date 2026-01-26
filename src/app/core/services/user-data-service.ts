@@ -4,9 +4,9 @@ import {
   UserFavoriteResponse,
   UserWalletDocument,
   UserWalletResponse,
-} from '../../../shared/models/user-data.model';
-import { tablesDb } from '../../../lib/appwrite';
-import { environment } from '../../../../environments/environment';
+} from '../../shared/models/user-data.model';
+import { tablesDb } from '../lib/appwrite';
+import { environment } from '../../../environments/environment';
 import { ID, Permission, Query, Role } from 'appwrite';
 
 @Injectable({

@@ -1,20 +1,29 @@
 import { Component, inject, OnInit, computed, signal, WritableSignal, effect } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth-service';
 import { CoinDetails, CryptoMarket, MarketChart } from '../../../../shared/models/coin-api.model';
-import { CoinApiService } from '../../services/coin-api-service';
-import { UserDataService } from '../../services/user-data-service';
 import { UserFavoriteResponse } from '../../../../shared/models/user-data.model';
-import { InfoCard } from '../../../../shared/components/info-card/info-card';
+import { InfoCard } from '../../components/info-card/info-card';
 import { TrendingDown, TrendingUp, TrendingUpDown, WalletIcon } from 'lucide-angular';
-import { AssetCard } from '../../../../shared/components/asset-card/asset-card';
-import { ListCard } from '../../../../shared/components/list-card/list-card';
+import { AssetCard } from '../../components/asset-card/asset-card';
+import { ListCard } from '../../components/list-card/list-card';
 import { BasicBarChart } from '../../../../shared/components/basic-bar-chart/basic-bar-chart';
 import { BasicLineChart } from '../../../../shared/components/basic-line-chart/basic-line-chart';
 import { DashboardListCard } from '../../components/dashboard-list-card/dashboard-list-card';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../core/services/user-data-service';
+import { Spinner } from '../../../../shared/components/spinner/spinner';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [InfoCard, AssetCard, ListCard, BasicBarChart, BasicLineChart, DashboardListCard],
+  imports: [
+    InfoCard,
+    AssetCard,
+    ListCard,
+    BasicBarChart,
+    BasicLineChart,
+    DashboardListCard,
+    Spinner,
+  ],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -25,6 +34,20 @@ export class DashboardPage implements OnInit {
 
   userFavoritesSymbol = signal<string[]>([]);
   watchlistTrend = signal<number>(0);
+
+  loadingCoinInfo = signal<boolean>(true);
+  loadingMarketChart = signal<boolean>(true);
+  loadingWatchlist = signal<boolean>(true);
+  loadingTop50 = signal<boolean>(true);
+
+  isLoading = computed(() => {
+    return (
+      this.loadingCoinInfo() ||
+      this.loadingMarketChart() ||
+      this.loadingWatchlist() ||
+      this.loadingTop50()
+    );
+  });
 
   chartLabels = ['1h', '24h', '7d', '14d', '30d'];
 
@@ -48,15 +71,9 @@ export class DashboardPage implements OnInit {
 
   userData = signal<UserFavoriteResponse | undefined>(undefined);
   async ngOnInit(): Promise<void> {
-    //loading data for asset card
     this.getCoinDetails('bitcoin', this.coinInfo);
-    //loading data for charts
     this.getMarketChart('bitcoin', '30', this.marketChart, 'usd');
-
-    //loading data for watchlist
     await this.loadWatchlist();
-
-    //loading top 50
     this.getMarkets('usd', 50, 1, this.top50list);
   }
 
@@ -64,6 +81,7 @@ export class DashboardPage implements OnInit {
     const userId = this.authService.currentUser()?.['$id'];
     if (!userId) return;
     try {
+      this.loadingWatchlist.set(true);
       const favorites = await this.userDataService.getUserFavorite(userId);
       this.userData.set(favorites);
       const symbols = favorites.items.map((item) => item.coinId);
@@ -75,6 +93,8 @@ export class DashboardPage implements OnInit {
       }
     } catch (error) {
       console.error('Failed to load user favorites:', error);
+    } finally {
+      this.loadingWatchlist.set(false);
     }
   }
 
@@ -131,13 +151,16 @@ export class DashboardPage implements OnInit {
     targetSignal: WritableSignal<CryptoMarket[]>,
     symbols?: string[],
   ) {
+    this.loadingTop50.set(true);
     this.coinApiService.getMarkets(currency, limit, page, symbols).subscribe({
       next: (response) => {
         targetSignal.set(response);
+        this.loadingTop50.set(false);
       },
       error: (err) => {
         this.errorMarkets.set('Something went wrong while loading coin markets.');
         console.error(err);
+        this.loadingTop50.set(false);
       },
     });
   }
@@ -152,15 +175,18 @@ export class DashboardPage implements OnInit {
     localization?: boolean,
     include_categories_details?: boolean,
   ) {
+    this.loadingCoinInfo.set(true);
     this.coinApiService
       .getCoinDetails(coinName, tickers, developer_data, localization, include_categories_details)
       .subscribe({
         next: (response) => {
           targetSignal.set(response);
+          this.loadingCoinInfo.set(false);
         },
         error: (err) => {
           console.error(err);
           this.errorCoinDetails.set('Something went wrong while loading coin details data');
+          this.loadingCoinInfo.set(false);
         },
       });
   }
@@ -173,11 +199,16 @@ export class DashboardPage implements OnInit {
     targetSignal: WritableSignal<MarketChart | undefined>,
     currency?: string,
   ) {
+    this.loadingMarketChart.set(true);
     this.coinApiService.getMarketChart(coinName, days, currency).subscribe({
-      next: targetSignal.set,
+      next: (response) => {
+        targetSignal.set(response);
+        this.loadingMarketChart.set(false);
+      },
       error: (err) => {
         console.error(err);
         this.errorMarketChart.set(err.message ?? 'Chart error');
+        this.loadingMarketChart.set(false);
       },
     });
   }

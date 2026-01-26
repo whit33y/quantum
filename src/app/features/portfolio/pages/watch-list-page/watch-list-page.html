@@ -19,11 +19,7 @@
       />
     }
   } @else if (loadingWatchlist()) {
-    <div
-      class="text-white text-2xl font-bold text-center bg-zinc-800 border border-white/5 rounded-2xl p-4"
-    >
-      <p>Loading...</p>
-    </div>
+    <app-spinner />
   } @else if (watchlist().length === 0 && !loadingWatchlist()) {
     <div
       class="text-white text-2xl font-bold text-center bg-zinc-800 border border-white/5 rounded-2xl p-4"

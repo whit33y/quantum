@@ -1,5 +1,5 @@
 import { Client, Account, TablesDB } from 'appwrite';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 export const client = new Client();
 export const tablesDb = new TablesDB(client);

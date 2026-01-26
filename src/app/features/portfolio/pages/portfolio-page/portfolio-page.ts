@@ -1,17 +1,18 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { UserDataService } from '../../../dashboard/services/user-data-service';
 import { AuthService } from '../../../../core/services/auth-service';
-import { CoinApiService } from '../../../dashboard/services/coin-api-service';
 import { CryptoMarket } from '../../../../shared/models/coin-api.model';
 import { UserWalletResponse } from '../../../../shared/models/user-data.model';
 import { PortfolioInfo } from '../../components/portfolio-info/portfolio-info';
 import { PortfolioCard } from '../../components/portfolio-card/portfolio-card';
 import { RouterLink } from '@angular/router';
 import { Button } from '../../../../shared/components/button/button';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../core/services/user-data-service';
+import { Spinner } from '../../../../shared/components/spinner/spinner';
 
 @Component({
   selector: 'app-portfolio-page',
-  imports: [PortfolioInfo, PortfolioCard, RouterLink, Button],
+  imports: [PortfolioInfo, PortfolioCard, RouterLink, Button, Spinner],
   templateUrl: './portfolio-page.html',
   styleUrl: './portfolio-page.css',
 })
@@ -34,7 +35,6 @@ export class PortfolioPage implements OnInit {
         this.walletData.set(portfolioCoins);
         if (this.walletData()) {
           const symbols = this.walletData()?.items.map((item) => item.coinId);
-          console.log(symbols);
           if (symbols && symbols.length > 0) {
             this.getMarkets('usd', this.walletData()!.total, 1, this.walletElements, symbols);
           }
@@ -102,7 +102,6 @@ export class PortfolioPage implements OnInit {
   }
 
   async removeFromPortfolio(id: string) {
-    console.log(id);
     const userId = this.authService.currentUser()?.['$id'];
     if (!userId) return;
     try {

@@ -1,7 +1,5 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { AuthService } from '../../../../../core/services/auth-service';
-import { CoinApiService } from '../../../../dashboard/services/coin-api-service';
-import { UserDataService } from '../../../../dashboard/services/user-data-service';
 import { form, FormField, min, minLength, required } from '@angular/forms/signals';
 import { SearchService } from '../../../../../core/services/search-service';
 import { PortfolioSearchCoin } from '../../../components/portfolio-search-coin/portfolio-search-coin';
@@ -10,6 +8,13 @@ import { PortfolioFindedItems } from '../../../components/portfolio-finded-items
 import { Button } from '../../../../../shared/components/button/button';
 import { UserWallet } from '../../../../../shared/models/user-data.model';
 import { Router } from '@angular/router';
+import { CoinApiService } from '../../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../../core/services/user-data-service';
+import {
+  AddCoinData,
+  AddCoinFormSchema,
+  AddCoinInitialData,
+} from '../../../models/coin-form.model';
 
 @Component({
   selector: 'app-create-portfolio-page',
@@ -32,20 +37,14 @@ export class CreatePortfolioPage implements OnInit {
   searchModel = signal({ search: '' });
   searchForm = form(this.searchModel);
 
-  coinModel = signal({ symbol: '', amount: 0 });
-  coinForm = form(this.coinModel, (coinFormSchema) => {
-    required(coinFormSchema.amount, { message: 'You have to pass amount' });
-    required(coinFormSchema.symbol, { message: 'You have to select coin' });
-    minLength(coinFormSchema.symbol, 1, { message: 'You must select coin' });
-    min(coinFormSchema.amount, 0.0000000000000001, { message: 'Value must be greater than 0' });
-  });
+  coinModel = signal<AddCoinData>(AddCoinInitialData);
+  coinForm = form(this.coinModel, AddCoinFormSchema);
 
   changeSearch($event: string) {
     clearTimeout(this.debounceTimer);
     this.debounceTimer = setTimeout(() => {
       const value = $event;
       this.searchService.setSearchTermCreate(value);
-      console.log(this.searchService.searchTermCreate());
       if (this.searchService.searchTermCreate().length > 0) {
         this.searchCoins(this.searchService.searchTermCreate(), this.findedCoins);
       } else {
@@ -59,7 +58,6 @@ export class CreatePortfolioPage implements OnInit {
     this.coinApiService.getCoinsSearch(search).subscribe({
       next: (response) => {
         targetSignal.set(response.coins);
-        console.log(response);
       },
       error: (error) => {
         console.error(error);
@@ -69,7 +67,6 @@ export class CreatePortfolioPage implements OnInit {
 
   selectCoin($event: CoinsSearch) {
     this.coinModel.set({ symbol: $event.symbol, amount: this.coinModel().amount });
-    console.log(this.coinModel());
   }
 
   existError = signal<string>('');
@@ -78,7 +75,6 @@ export class CreatePortfolioPage implements OnInit {
     if (!userId) return;
     try {
       const symbol = this.coinModel().symbol.toLowerCase();
-      console.log(symbol, this.walletItems());
       const alreadyExists = this.walletItems()?.some((item) => item.coinId === symbol);
       if (alreadyExists) {
         this.existError.set('This coin already exist in your wallet.');

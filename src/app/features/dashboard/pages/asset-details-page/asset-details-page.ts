@@ -8,16 +8,19 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { CoinApiService } from '../../services/coin-api-service';
 import { CoinDetails, MarketChart } from '../../../../shared/models/coin-api.model';
 import { AssetDetailsCard } from '../../components/asset-details-card/asset-details-card';
-import { UserDataService } from '../../services/user-data-service';
 import { AuthService } from '../../../../core/services/auth-service';
 import { UserFavorite, UserFavoriteResponse } from '../../../../shared/models/user-data.model';
+import { CoinApiService } from '../../../../core/services/coin-api-service';
+import { UserDataService } from '../../../../core/services/user-data-service';
+import { Title } from '@angular/platform-browser';
+
+import { Spinner } from '../../../../shared/components/spinner/spinner';
 
 @Component({
   selector: 'app-asset-details-page',
-  imports: [AssetDetailsCard],
+  imports: [AssetDetailsCard, Spinner],
   templateUrl: './asset-details-page.html',
   styleUrl: './asset-details-page.css',
 })
@@ -25,11 +28,20 @@ export class AssetDetailsPage implements OnInit {
   private coinApiService = inject(CoinApiService);
   private userDataService = inject(UserDataService);
   private authService = inject(AuthService);
+  private title = inject(Title);
+
   coinId = input<string>();
   favs = signal<string[]>([]);
   favsFull = signal<UserFavorite[]>([]);
   userId = signal<string>('');
   symbol = signal<string>('');
+
+  loadingDetails = signal<boolean>(true);
+  loadingChart = signal<boolean>(true);
+
+  isLoading = computed(() => {
+    return this.loadingDetails() || this.loadingChart();
+  });
 
   async ngOnInit() {
     const userId = this.authService.currentUser()?.['$id'];
@@ -52,7 +64,6 @@ export class AssetDetailsPage implements OnInit {
   }
 
   isFavorite(symbol: string) {
-    console.log(symbol, this.favs());
     if (this.favs().includes(symbol, 0)) {
       return true;
     } else {
@@ -78,16 +89,20 @@ export class AssetDetailsPage implements OnInit {
     localization?: boolean,
     include_categories_details?: boolean,
   ) {
+    this.loadingDetails.set(true);
     this.coinApiService
       .getCoinDetails(coinId, tickers, developer_data, localization, include_categories_details)
       .subscribe({
         next: (response) => {
           if (targetSignal) {
             targetSignal.set(response);
+            this.title.setTitle(`${this.coinDetails()?.name} details`);
           }
+          this.loadingDetails.set(false);
         },
         error: (err) => {
           console.error(err);
+          this.loadingDetails.set(false);
         },
       });
   }
@@ -134,11 +149,16 @@ export class AssetDetailsPage implements OnInit {
     targetSignal: WritableSignal<MarketChart | undefined>,
     currency?: string,
   ) {
+    this.loadingChart.set(true);
     this.coinApiService.getMarketChart(coinName, days, currency).subscribe({
-      next: targetSignal.set,
+      next: (response) => {
+        targetSignal.set(response);
+        this.loadingChart.set(false);
+      },
       error: (err) => {
         console.error(err);
         this.errorMarketChart.set(err.message ?? 'Chart error');
+        this.loadingChart.set(false);
       },
     });
   }
