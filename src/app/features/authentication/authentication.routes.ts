@@ -14,10 +14,12 @@ export const AUTH_ROUTES: Routes = [
     path: 'verify',
     canActivate: [authGuard, notVerifiedGuard],
     loadComponent: () => import('./pages/verify-page/verify-page').then((p) => p.VerifyPage),
+    title: 'Verify',
   },
   {
     path: 'settings',
     canActivate: [authGuard, verifiedGuard],
     loadComponent: () => import('./pages/settings-page/settings-page').then((p) => p.SettingsPage),
+    title: 'Settings',
   },
 ];
