@@ -14,10 +14,6 @@ export class SettingsPage {
 
   error = computed(() => this.authService.authError());
 
-  eff = effect(() => {
-    console.log(this.authService.authError());
-  });
-
   onSubmit(event: ChangePasswordData) {
     this.authService.changePassword(event.oldPassword, event.newPassword);
   }

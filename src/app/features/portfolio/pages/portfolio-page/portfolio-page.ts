@@ -35,7 +35,6 @@ export class PortfolioPage implements OnInit {
         this.walletData.set(portfolioCoins);
         if (this.walletData()) {
           const symbols = this.walletData()?.items.map((item) => item.coinId);
-          console.log(symbols);
           if (symbols && symbols.length > 0) {
             this.getMarkets('usd', this.walletData()!.total, 1, this.walletElements, symbols);
           }
@@ -103,7 +102,6 @@ export class PortfolioPage implements OnInit {
   }
 
   async removeFromPortfolio(id: string) {
-    console.log(id);
     const userId = this.authService.currentUser()?.['$id'];
     if (!userId) return;
     try {

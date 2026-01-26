@@ -64,7 +64,6 @@ export class AssetDetailsPage implements OnInit {
   }
 
   isFavorite(symbol: string) {
-    console.log(symbol, this.favs());
     if (this.favs().includes(symbol, 0)) {
       return true;
     } else {

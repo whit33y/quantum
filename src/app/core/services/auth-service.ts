@@ -37,7 +37,6 @@ export class AuthService {
       const error = err as AppwriteError;
       if (error.message) {
         this.authError.set(error.message);
-        console.log(this.authError());
       }
     }
   }
@@ -57,7 +56,6 @@ export class AuthService {
       const error = err as AppwriteError;
       if (error.message) {
         this.authError.set(error.message);
-        console.log(this.authError());
       }
     }
   }
@@ -71,7 +69,6 @@ export class AuthService {
       const error = err as AppwriteError;
       if (error.message) {
         this.authError.set(error.message);
-        console.log(this.authError());
       }
     }
   }
@@ -89,7 +86,6 @@ export class AuthService {
       const error = err as AppwriteError;
       if (error.message) {
         this.authError.set(error.message);
-        console.log(this.authError());
       }
     }
   }

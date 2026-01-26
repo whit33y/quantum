@@ -32,12 +32,10 @@ export class AuthPage {
   }
 
   login(loginForm: LoginData) {
-    console.log(loginForm);
     this.authService.login(loginForm.email, loginForm.password);
   }
 
   register(registerForm: RegisterData) {
-    console.log(registerForm);
     this.authService.register(registerForm.email, registerForm.password, registerForm.name);
   }
 }

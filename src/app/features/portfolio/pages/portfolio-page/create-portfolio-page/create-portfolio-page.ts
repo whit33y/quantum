@@ -45,7 +45,6 @@ export class CreatePortfolioPage implements OnInit {
     this.debounceTimer = setTimeout(() => {
       const value = $event;
       this.searchService.setSearchTermCreate(value);
-      console.log(this.searchService.searchTermCreate());
       if (this.searchService.searchTermCreate().length > 0) {
         this.searchCoins(this.searchService.searchTermCreate(), this.findedCoins);
       } else {
@@ -59,7 +58,6 @@ export class CreatePortfolioPage implements OnInit {
     this.coinApiService.getCoinsSearch(search).subscribe({
       next: (response) => {
         targetSignal.set(response.coins);
-        console.log(response);
       },
       error: (error) => {
         console.error(error);
@@ -69,7 +67,6 @@ export class CreatePortfolioPage implements OnInit {
 
   selectCoin($event: CoinsSearch) {
     this.coinModel.set({ symbol: $event.symbol, amount: this.coinModel().amount });
-    console.log(this.coinModel());
   }
 
   existError = signal<string>('');
@@ -78,7 +75,6 @@ export class CreatePortfolioPage implements OnInit {
     if (!userId) return;
     try {
       const symbol = this.coinModel().symbol.toLowerCase();
-      console.log(symbol, this.walletItems());
       const alreadyExists = this.walletItems()?.some((item) => item.coinId === symbol);
       if (alreadyExists) {
         this.existError.set('This coin already exist in your wallet.');
