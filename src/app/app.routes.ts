@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { verifiedGuard } from './core/guards/verified-guard';
+import { noAuthGuard } from './core/guards/no-auth-guard';
 
 export const routes: Routes = [
+  {
+    path: '',
+    canActivate: [noAuthGuard],
+    loadChildren: () => import('./features/landing/landing-routes').then((r) => r.LANDING_ROUTES),
+  },
   {
     path: 'dashboard',
     canActivate: [authGuard, verifiedGuard],
