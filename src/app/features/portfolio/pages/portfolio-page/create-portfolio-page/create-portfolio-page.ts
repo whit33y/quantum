@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { AuthService } from '../../../../../core/services/auth-service';
-import { form, FormField, min, minLength, required } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
 import { SearchService } from '../../../../../core/services/search-service';
 import { PortfolioSearchCoin } from '../../../components/portfolio-search-coin/portfolio-search-coin';
 import { CoinsSearch } from '../../../../../shared/models/coin-api.model';
