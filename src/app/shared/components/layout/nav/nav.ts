@@ -13,7 +13,7 @@ import { SearchService } from '../../../../core/services/search-service';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 import { NavTickerScroll } from './nav-ticker-scroll/nav-ticker-scroll';
-import { CryptoMarket } from '../../../models/coin-api.model';
+import { CoinsSearch, CryptoMarket } from '../../../models/coin-api.model';
 import { CoinApiService } from '../../../../features/dashboard/services/coin-api-service';
 
 @Component({
@@ -37,6 +37,8 @@ export class Nav implements OnInit {
   readonly LogOut = LogOut;
 
   isMenuOpen = false;
+  isSearchDropdownOpen = signal<boolean>(false);
+  isSearchLoading = signal<boolean>(false);
 
   ticker = signal<CryptoMarket[]>([]);
   ngOnInit() {
@@ -47,6 +49,7 @@ export class Nav implements OnInit {
   onDocumentClick(event: MouseEvent) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.isMenuOpen = false;
+      this.isSearchDropdownOpen.set(false);
     }
   }
 
@@ -59,9 +62,24 @@ export class Nav implements OnInit {
 
   changeSearch() {
     clearTimeout(this.debounceTimer);
+    const value = this.searchModel().search;
+
+    if (value.length > 0) {
+      this.isSearchLoading.set(true);
+      this.isSearchDropdownOpen.set(true);
+    } else {
+      this.isSearchLoading.set(false);
+      this.isSearchDropdownOpen.set(false);
+      this.findedCoins.set([]);
+    }
+
     this.debounceTimer = setTimeout(() => {
-      const value = this.searchModel().search;
       this.searchService.setSearchTerm(value);
+      if (this.searchService.searchTerm().length > 0) {
+        this.searchCoins(this.searchService.searchTerm(), this.findedCoins);
+      } else {
+        this.findedCoins.set([]);
+      }
     }, 300);
   }
 
@@ -97,5 +115,27 @@ export class Nav implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  errorSearch = signal<string>('');
+  findedCoins = signal<CoinsSearch[]>([]);
+  searchCoins(search: string, targetSignal: WritableSignal<CoinsSearch[]>) {
+    this.coinApiService.getCoinsSearch(search).subscribe({
+      next: (response) => {
+        targetSignal.set(response.coins);
+        this.isSearchLoading.set(false);
+      },
+      error: (error) => {
+        this.errorSearch.set('Something went wrong while searching');
+        this.isSearchLoading.set(false);
+        console.error(error);
+      },
+    });
+  }
+
+  closeSearchDropdown() {
+    this.searchService.setSearchTerm('');
+    this.isSearchDropdownOpen.set(false);
+    this.searchModel.set({ search: '' });
   }
 }

@@ -4,17 +4,68 @@
       <a [routerLink]="['/dashboard']" class="flex items-center gap-2">
         <span class="text-xl font-bold tracking-tight text-white">QUANTUM</span>
       </a>
-      <div
-        class="hidden md:flex items-center bg-zinc-950 border border-white/10 rounded-full px-4 py-1.5 w-80 focus-within:border-indigo-500/50 transition-all"
-      >
-        <i-lucide [img]="Search" class="w-4 h-4 text-zinc-500"></i-lucide>
-        <input
-          type="text"
-          [formField]="searchForm.search"
-          (input)="changeSearch()"
-          placeholder="Search coins..."
-          class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-zinc-300"
-        />
+      <div class="relative">
+        <div
+          class="hidden md:flex items-center bg-zinc-950 border border-white/10 rounded-full px-4 py-1.5 w-80 focus-within:border-indigo-500/50 transition-all"
+        >
+          <i-lucide [img]="Search" class="w-4 h-4 text-zinc-500"></i-lucide>
+          <input
+            type="text"
+            [formField]="searchForm.search"
+            (input)="changeSearch()"
+            placeholder="Search coins..."
+            class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-zinc-300"
+          />
+        </div>
+
+        @if (isSearchDropdownOpen()) {
+          <div
+            class="absolute top-full left-0 right-0 mt-2 bg-zinc-900 border border-white/10 rounded-xl shadow-xl z-50 overflow-hidden max-h-64"
+          >
+            @if (isSearchLoading()) {
+              <div class="flex items-center justify-center px-4 py-6">
+                <span class="text-sm text-zinc-400">Loading...</span>
+              </div>
+            } @else if (findedCoins().length === 0) {
+              <div class="flex items-center justify-center px-4 py-6">
+                <span class="text-sm text-zinc-400">No results found</span>
+              </div>
+            } @else {
+              <div class="overflow-y-auto max-h-56">
+                @for (coin of findedCoins(); track coin.id) {
+                  <a
+                    [routerLink]="['/dashboard/asset-details', coin.id]"
+                    (click)="closeSearchDropdown()"
+                    class="flex w-full items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-200 hover:bg-white/5"
+                  >
+                    <img
+                      [src]="coin.thumb"
+                      [alt]="coin.name"
+                      class="w-8 h-8 rounded-full bg-zinc-800"
+                    />
+
+                    <div class="flex flex-col flex-1 min-w-0">
+                      <span class="text-sm font-medium text-white truncate">
+                        {{ coin.name }}
+                      </span>
+                      <span class="text-xs text-zinc-500 uppercase">
+                        {{ coin.symbol }}
+                      </span>
+                    </div>
+
+                    @if (coin.market_cap_rank) {
+                      <div
+                        class="flex items-center justify-center px-2 py-1 bg-zinc-800 rounded-lg"
+                      >
+                        <span class="text-xs text-zinc-400">#{{ coin.market_cap_rank }}</span>
+                      </div>
+                    }
+                  </a>
+                }
+              </div>
+            }
+          </div>
+        }
       </div>
     </div>
     <div class="flex items-center gap-6">
