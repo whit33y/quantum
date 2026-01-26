@@ -8,10 +8,11 @@ import { RouterLink } from '@angular/router';
 import { Button } from '../../../../shared/components/button/button';
 import { CoinApiService } from '../../../../core/services/coin-api-service';
 import { UserDataService } from '../../../../core/services/user-data-service';
+import { Spinner } from '../../../../shared/components/spinner/spinner';
 
 @Component({
   selector: 'app-portfolio-page',
-  imports: [PortfolioInfo, PortfolioCard, RouterLink, Button],
+  imports: [PortfolioInfo, PortfolioCard, RouterLink, Button, Spinner],
   templateUrl: './portfolio-page.html',
   styleUrl: './portfolio-page.css',
 })

@@ -7,10 +7,11 @@ import { WatchListInfo } from '../../components/watch-list-info/watch-list-info'
 import { RouterLink } from '@angular/router';
 import { CoinApiService } from '../../../../core/services/coin-api-service';
 import { UserDataService } from '../../../../core/services/user-data-service';
+import { Spinner } from '../../../../shared/components/spinner/spinner';
 
 @Component({
   selector: 'app-watch-list-page',
-  imports: [WatchListCard, WatchListInfo, RouterLink],
+  imports: [WatchListCard, WatchListInfo, RouterLink, Spinner],
   templateUrl: './watch-list-page.html',
   styleUrl: './watch-list-page.css',
 })
@@ -45,7 +46,7 @@ export class WatchListPage implements OnInit {
     }
   }
 
-  loadingWatchlist = signal<boolean>(false);
+  loadingWatchlist = signal<boolean>(true);
   errorMarkets = signal<string>('');
   getMarkets(
     currency: string,

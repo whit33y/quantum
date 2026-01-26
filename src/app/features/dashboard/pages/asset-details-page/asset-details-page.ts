@@ -16,9 +16,11 @@ import { CoinApiService } from '../../../../core/services/coin-api-service';
 import { UserDataService } from '../../../../core/services/user-data-service';
 import { Title } from '@angular/platform-browser';
 
+import { Spinner } from '../../../../shared/components/spinner/spinner';
+
 @Component({
   selector: 'app-asset-details-page',
-  imports: [AssetDetailsCard],
+  imports: [AssetDetailsCard, Spinner],
   templateUrl: './asset-details-page.html',
   styleUrl: './asset-details-page.css',
 })
@@ -33,6 +35,13 @@ export class AssetDetailsPage implements OnInit {
   favsFull = signal<UserFavorite[]>([]);
   userId = signal<string>('');
   symbol = signal<string>('');
+
+  loadingDetails = signal<boolean>(true);
+  loadingChart = signal<boolean>(true);
+
+  isLoading = computed(() => {
+    return this.loadingDetails() || this.loadingChart();
+  });
 
   async ngOnInit() {
     const userId = this.authService.currentUser()?.['$id'];
@@ -81,6 +90,7 @@ export class AssetDetailsPage implements OnInit {
     localization?: boolean,
     include_categories_details?: boolean,
   ) {
+    this.loadingDetails.set(true);
     this.coinApiService
       .getCoinDetails(coinId, tickers, developer_data, localization, include_categories_details)
       .subscribe({
@@ -89,9 +99,11 @@ export class AssetDetailsPage implements OnInit {
             targetSignal.set(response);
             this.title.setTitle(`${this.coinDetails()?.name} details`);
           }
+          this.loadingDetails.set(false);
         },
         error: (err) => {
           console.error(err);
+          this.loadingDetails.set(false);
         },
       });
   }
@@ -138,11 +150,16 @@ export class AssetDetailsPage implements OnInit {
     targetSignal: WritableSignal<MarketChart | undefined>,
     currency?: string,
   ) {
+    this.loadingChart.set(true);
     this.coinApiService.getMarketChart(coinName, days, currency).subscribe({
-      next: targetSignal.set,
+      next: (response) => {
+        targetSignal.set(response);
+        this.loadingChart.set(false);
+      },
       error: (err) => {
         console.error(err);
         this.errorMarketChart.set(err.message ?? 'Chart error');
+        this.loadingChart.set(false);
       },
     });
   }

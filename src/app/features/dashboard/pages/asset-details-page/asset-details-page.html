@@ -1,11 +1,9 @@
 <div class="mx-40 my-4 p-2">
-  <app-asset-details-card
-    [coinDetails]="coinDetails()"
-    [lineChartData]="lineChartData()"
-    [lineChartLabels]="lineChartLabels()"
-    [chartData]="chartData()"
-    [chartLabel]="chartLabels"
-    (watchlistId)="manageWatchlist($event!)"
-    [favorite]="isFavorite(this.coinDetails()?.symbol!)"
-  />
+  @if (isLoading()) {
+  <app-spinner />
+  } @else {
+  <app-asset-details-card [coinDetails]="coinDetails()" [lineChartData]="lineChartData()"
+    [lineChartLabels]="lineChartLabels()" [chartData]="chartData()" [chartLabel]="chartLabels"
+    (watchlistId)="manageWatchlist($event!)" [favorite]="isFavorite(this.coinDetails()?.symbol!)" />
+  }
 </div>
