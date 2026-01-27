@@ -42,10 +42,9 @@ export class DashboardPage implements OnInit {
 
   isLoading = computed(() => {
     return (
-      this.loadingCoinInfo() ||
-      this.loadingMarketChart() ||
-      this.loadingWatchlist() ||
-      this.loadingTop50()
+      this.loadingCoinInfo() || this.loadingMarketChart()
+      // this.loadingWatchlist() ||
+      // this.loadingTop50()
     );
   });
 
@@ -81,7 +80,7 @@ export class DashboardPage implements OnInit {
     const userId = this.authService.currentUser()?.['$id'];
     if (!userId) return;
     try {
-      this.loadingWatchlist.set(true);
+      // this.loadingWatchlist.set(true);
       const favorites = await this.userDataService.getUserFavorite(userId);
       this.userData.set(favorites);
       const symbols = favorites.items.map((item) => item.coinId);
@@ -94,7 +93,7 @@ export class DashboardPage implements OnInit {
     } catch (error) {
       console.error('Failed to load user favorites:', error);
     } finally {
-      this.loadingWatchlist.set(false);
+      // this.loadingWatchlist.set(false);
     }
   }
 
@@ -155,12 +154,12 @@ export class DashboardPage implements OnInit {
     this.coinApiService.getMarkets(currency, limit, page, symbols).subscribe({
       next: (response) => {
         targetSignal.set(response);
-        this.loadingTop50.set(false);
+        // this.loadingTop50.set(false);
       },
       error: (err) => {
         this.errorMarkets.set('Something went wrong while loading coin markets.');
         console.error(err);
-        this.loadingTop50.set(false);
+        // this.loadingTop50.set(false);
       },
     });
   }

@@ -11,7 +11,7 @@
 
 ## 📹 Walkthrough Video
 
-[Click here to see walkthrough video](todo)
+[Click here to see walkthrough video](https://youtu.be/KGpJQb5TKIU)
 
 ---
 
