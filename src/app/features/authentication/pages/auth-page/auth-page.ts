@@ -5,14 +5,17 @@ import { LoginData, RegisterData } from '../../models/auth-form.model';
 import { AuthService } from '../../../../core/services/auth-service';
 import { NavTickerScroll } from '../../../../shared/components/layout/nav/nav-ticker-scroll/nav-ticker-scroll';
 import { Title } from '@angular/platform-browser';
+import { LucideAngularModule, ArrowLeft } from 'lucide-angular';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-auth-page',
-  imports: [LoginForm, RegisterForm, NavTickerScroll],
+  imports: [LoginForm, RegisterForm, NavTickerScroll, LucideAngularModule, RouterLink],
   templateUrl: './auth-page.html',
   styleUrl: './auth-page.css',
 })
 export class AuthPage {
+  readonly ArrowLeft = ArrowLeft;
   private authService = inject(AuthService);
   private title = inject(Title);
   tickerElements = tickerElements;

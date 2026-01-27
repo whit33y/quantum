@@ -1,60 +1,47 @@
 <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
   <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
     <div
-      class="absolute top-20 left-10 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl mix-blend-screen animate-pulse"
-    ></div>
+      class="absolute top-20 left-10 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl mix-blend-screen animate-pulse">
+    </div>
     <div
       class="absolute bottom-20 right-10 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl mix-blend-screen animate-pulse"
-      style="animation-delay: 2s"
-    ></div>
+      style="animation-delay: 2s"></div>
   </div>
 
   <div class="relative container mx-auto px-6 text-center z-10">
     <div
-      class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm mb-8 animate-fade-in-up"
-    >
-      <span class="flex h-2 w-2 rounded-full bg-green-500"></span>
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm mb-8">
+      <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
       <span class="text-sm font-medium text-zinc-400">Quantum available now!</span>
     </div>
 
     <h1
-      class="text-5xl md:text-7xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-linear-to-b from-white via-white/90 to-white/50 animate-title"
-    >
+      class="text-5xl md:text-7xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-linear-to-b from-white via-white/90 to-white/5">
       Quantum <br />
-      <span class="bg-clip-text text-transparent bg-linear-to-r from-rose-400 to-purple-400"
-        >Digital Asset Management</span
-      >
+      <span class="bg-clip-text text-transparent bg-linear-to-r from-rose-400 to-purple-400">Digital Asset
+        Management</span>
     </h1>
 
-    <p
-      class="text-xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed animate-fade-in-up"
-      style="animation-delay: 200ms"
-    >
+    <p class="text-xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed" style="animation-delay: 200ms">
       Take control of your crypto portfolio. Analytics, tools, and an intuitive interface in one
       place.
     </p>
 
-    <div
-      class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up"
-      style="animation-delay: 400ms"
-    >
-      <app-button
-        text="Get Started"
-        routerLink="/auth/login"
-        class="shadow-lg shadow-indigo-500/25 w-40 text-2xl"
-      ></app-button>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up"
+      style="animation-delay: 400ms">
+      <app-button text="Get Started" routerLink="/auth/login"
+        class="shadow-lg shadow-indigo-500/25 w-40 text-xl"></app-button>
     </div>
-    <div
-      class="mt-16 sm:mt-24 relative max-w-5xl mx-auto animate-fade-in-up"
-      style="animation-delay: 600ms"
-    >
-      <div
-        class="rounded-xl bg-zinc-900/50 backdrop-blur border border-zinc-800 p-2 shadow-2xl shadow-indigo-500/10"
-      >
+    <div class="mt-16 sm:mt-24 relative max-w-5xl mx-auto animate-fade-in-up" style="animation-delay: 600ms">
+      <div class="rounded-xl bg-zinc-900/50 backdrop-blur border border-zinc-800 p-2 shadow-2xl shadow-indigo-500/10">
         <div
-          class="rounded-lg bg-zinc-950 overflow-hidden aspect-video relative flex items-center justify-center border border-zinc-800/50"
-        >
-          <img src="/cta.webp" alt="Dashboard Interface" class="w-full h-full object-cover" />
+          class="rounded-lg bg-zinc-950 overflow-hidden aspect-video relative flex items-center justify-center border border-zinc-800/50">
+          @for (image of images; track image) {
+          <img [src]="image" alt="Dashboard Interface"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+            [class.opacity-100]="currentImage() === image" [class.opacity-0]="currentImage() !== image" />
+          }
         </div>
       </div>
       <div class="absolute -inset-10 bg-indigo-500/20 blur-3xl -z-10 rounded-full opacity-50"></div>
