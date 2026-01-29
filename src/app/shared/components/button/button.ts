@@ -9,12 +9,13 @@ import { Component, input, output } from '@angular/core';
 export class Button {
   text = input<string>('Wykonaj');
   disabled = input<boolean>(false);
-  variant = input<'primary' | 'disabled'>('primary');
+  variant = input<'primary' | 'secondary' | 'disabled'>('primary');
   buttonClick = output<MouseEvent>();
 
   get computedClasses(): string {
     const variants: Record<string, string> = {
       primary: 'bg-linear-to-r from-indigo-500 to-purple-500 text-white',
+      secondary: 'bg-linear-to-r from-purple-400 to-rose-400 text-white',
       disabled: 'bg-zinc-600 cursor-not-allowed',
     };
 

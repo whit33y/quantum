@@ -9,15 +9,18 @@
       </div>
       <p class="text-white p-2">Check your email to verify on our application.</p>
       @if (resendAvailable()) {
-        <button (click)="resend()" class="p-4">
-          <span class="text-emerald-400">Resend verify code</span>
-        </button>
+        <app-button
+          (buttonClick)="resend()"
+          variant="secondary"
+          class="w-80 p-4"
+          text="Resend verify code"
+        />
       } @else {
         <p class="text-white p-4">
           Wait <span>{{ resendCount() }}</span> before you can resend
         </p>
       }
-      <app-button class="w-80" (buttonClick)="logout()" text="Logout" variant="primary" />
+      <app-button class="w-40" (buttonClick)="logout()" text="Logout" variant="primary" />
     </div>
   </div>
 </div>

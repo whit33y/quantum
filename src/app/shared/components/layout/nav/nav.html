@@ -85,12 +85,12 @@
         >
       </div>
       <div class="relative flex items-center gap-4 border-l border-white/10 pl-6">
-        <button [routerLink]="['/portfolio/watchlist']" class="cursor-pointer">
+        <a [routerLink]="['/portfolio/watchlist']" class="cursor-pointer">
           <i-lucide [img]="Star" class="text-white w-6 h-6" />
-        </button>
-        <button [routerLink]="['/portfolio/wallet']" class="cursor-pointer">
+        </a>
+        <a [routerLink]="['/portfolio/wallet']" class="cursor-pointer">
           <i-lucide [img]="Wallet" class="text-white w-6 h-6" />
-        </button>
+        </a>
         <button
           (click)="toggleMenu()"
           class="cursor-pointer focus:outline-none active:scale-95 transition-transform"
