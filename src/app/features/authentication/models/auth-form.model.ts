@@ -1,4 +1,4 @@
-import { email, required, schema, validate } from '@angular/forms/signals';
+import { email, minLength, required, schema, validate } from '@angular/forms/signals';
 
 export interface LoginData {
   email: string;
@@ -33,7 +33,9 @@ export const registerInitialData: RegisterData = {
 export const registerDataSchema = schema<RegisterData>((rootPath) => {
   required(rootPath.email, { message: 'Email is required' });
   required(rootPath.name, { message: 'Username is required' });
+  minLength(rootPath.name, 4, { message: 'Username must be at least 4 characters long' });
   required(rootPath.password, { message: 'Password is required' });
+  minLength(rootPath.password, 8, { message: 'Password must be at least 8 characters long' });
   required(rootPath.confirmPassword, { message: 'You have to confirm your password' });
   validate(rootPath.confirmPassword, (ctx) => {
     const password = ctx.valueOf(rootPath.password);
